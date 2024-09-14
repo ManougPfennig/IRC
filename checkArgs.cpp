@@ -1,11 +1,10 @@
 #include "ircserv.hpp"
 
-// Check if the port is not already in use by another service on the machine and allowed by the firewall. -> Throw an exception otherwise.
-
 void	surveyForHelp(void)
 {
 	std::string	answer;
 
+	// Opening a prompt to offer help
 	std::cout << YELLOW << "Would you like more info on ports ? y/n\n" << RESET;
 	answer = getInput();
 	if (answer == "y")
@@ -21,7 +20,8 @@ int	parsing(int ac, char **av)
 	// Check for invalid amount of arguments
 	if (ac != 3)
 	{
-		displayLaunchExemple();
+		std::cout << YELLOW << "Please start server with a valid argument list :\n";
+		std::cout << GREEN << "./ircserv <port> <password>" << RESET << std::endl;
 		return (ERROR);
 	}
 

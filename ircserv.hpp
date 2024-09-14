@@ -5,15 +5,29 @@
 // INCLUDED LIBRARIES
 // -------------------------
 
-# include <iostream>
+# include <iostream>		// For 
 # include <iomanip>
-# include <sstream>
+# include <sstream>			
 # include <string>
-# include <cstring>
 # include <limits>
 # include <exception>
-# include <sys/socket.h>
-# include <sys/select.h>
+
+# include <sys/select.h>	// For select()
+# include <sys/types.h>		// For socket(), fstat()
+# include <sys/socket.h>	// For socket(), setsockopt(), getsockname(), bind(), listen(), accept()
+# include <netinet/in.h>	// For htons(), htonl(), ntohs(), ntohl(), struct sockaddr_in
+# include <arpa/inet.h>		// For inet_addr(), inet_ntoa(), gethostbyname(), getaddrinfo(), freeaddrinfo()
+# include <unistd.h>		// For close(), read(), write(), lseek()
+# include <netdb.h>			// For getprotobyname(), gethostbyname(), getaddrinfo(), freeaddrinfo()
+# include <fcntl.h>			// For fcntl()
+# include <signal.h>		// For signal(), sigaction()
+# include <cstring>			// For memset(), strerror()
+
+typedef struct	s_serverInfo {
+
+
+
+}				t_serverInfo;
 
 
 // -------------------------
