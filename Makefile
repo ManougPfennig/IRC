@@ -1,7 +1,5 @@
 NAME = ircserv
-
-NAME = PmergeMe
-SRCS = main.cpp
+SRCS = main.cpp check_args.cpp utils.cpp
 FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror
 OBJS = ${SRCS:.cpp=.o}
 
