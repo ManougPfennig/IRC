@@ -1,7 +1,7 @@
 #include "ircserv.hpp"
 
 // Checks whether the string is made entirely of numeric characters
-bool isStrDigits(char *str)
+bool isStrDigits( char *str )
 {
 	for (int i = 0; str[i] != '\0'; i++)
 	{
@@ -11,6 +11,7 @@ bool isStrDigits(char *str)
 	return (true);
 }
 
+// Displays a prompt to get an input string in the terminal
 std::string	getInput( void )
 {
 	std::string	input;
@@ -27,9 +28,6 @@ std::string	getInput( void )
 		// Doesn't check entry if it is empty
 		if (input.length() == 0)
 			continue;
-		// Checks if the entry is a valid input
-		if (!RPN::isValidInfix(input))
-			std::cout << YELLOW << "Unvalid entry." << RESET << std::endl;
 		else
 			break;
 	}

@@ -1,5 +1,5 @@
 NAME = ircserv
-SRCS = main.cpp check_args.cpp utils.cpp
+SRCS = main.cpp checkArgs.cpp helpMessages.cpp utils.cpp
 FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror
 OBJS = ${SRCS:.cpp=.o}
 
