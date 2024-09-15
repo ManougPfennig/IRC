@@ -16,8 +16,6 @@ class ServerActor {
 		std::string _password;
 
 	public:
-		int	_server_fd;
-
 		~ServerActor( void );
 		ServerActor( void );
 		ServerActor( const ServerActor &sa );
@@ -37,9 +35,6 @@ class ServerActor {
 
 		std::string	getPassword( void ) const;
 		void		setPassword( const std::string &password );
-
-		int		getFd( void ) const;
-		int		setFd(int fd);
 
 
 	class SocketCreationFailed : public std::exception

@@ -50,14 +50,3 @@ void	ServerActor::setPassword( const std::string &password ){
 	_password = password;
 	return ;
 }
-
-
-int	ServerActor::getFd( void ) const {
-
-	return (_server_fd);
-}
-
-int	ServerActor::setFd(int fd) {
-	_server_fd = fd;
-	return(_server_fd);
-}
