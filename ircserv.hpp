@@ -48,7 +48,7 @@ void		printPortHelp( void );
 
 # define ERROR 1
 # define ALLGOOD 0
-# define MAXCLIENT 8192
+# define MAXCLIENT 10
 # define BUFFERSIZE 1024
 
 // Terminal Text Colors

@@ -55,10 +55,16 @@ class ServerActor {
 	{
 		const char *what() const throw()
 		{
-			return ("Could not put the server socket inlistening mode...");
+			return ("Could not put the server socket in listening mode...");
 		}
 	};
-
+	class SelectFailed : public std::exception
+	{
+		const char *what() const throw()
+		{
+			return ("[SELECT ERROR] Something wrong happened, please try again...");
+		}
+	};
 };
 
 #endif
