@@ -5,7 +5,7 @@
 // INCLUDED LIBRARIES
 // -------------------------
 
-# include <iostream>		// For 
+# include <iostream>
 # include <iomanip>
 # include <sstream>			
 # include <string>
@@ -23,12 +23,7 @@
 # include <signal.h>		// For signal(), sigaction()
 # include <cstring>			// For memset(), strerror()
 
-typedef struct	s_serverInfo {
-
-
-
-}				t_serverInfo;
-
+# include "ServerActor.hpp"
 
 // -------------------------
 // FUNCTION DECLARATION LIST
@@ -37,6 +32,7 @@ typedef struct	s_serverInfo {
 int			parsing( int ac, char **av );
 bool		isStrDigits( char *str );
 std::string	getInput( void );
+void		openServer( ServerActor &serv );
 
 // Messages Printing
 
