@@ -32,7 +32,7 @@
 int			parsing( int ac, char **av );
 bool		isStrDigits( char *str );
 std::string	getInput( void );
-void		openServer( ServerActor &serv );
+void		openServer( ServerActor &serv, char *port, char *password );
 
 // Messages Printing
 
@@ -48,6 +48,8 @@ void		printPortHelp( void );
 
 # define ERROR 1
 # define ALLGOOD 0
+# define MAXCLIENT 8192
+# define BUFFERSIZE 1024
 
 // Terminal Text Colors
 

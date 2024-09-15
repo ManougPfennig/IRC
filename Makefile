@@ -1,5 +1,5 @@
 NAME = ircserv
-SRCS = main.cpp checkArgs.cpp utils.cpp openServer.cpp ServerActor.cpp
+SRCS = main.cpp checkArgs.cpp utils.cpp openServer.cpp ServerActor.cpp Client.cpp
 FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror
 OBJS = ${SRCS:.cpp=.o}
 
