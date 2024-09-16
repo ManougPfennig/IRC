@@ -24,6 +24,7 @@
 # include <cstring>			// For memset(), strerror()
 
 # include "ServerActor.hpp"
+# include "Client.hpp"
 
 // -------------------------
 // FUNCTION DECLARATION LIST

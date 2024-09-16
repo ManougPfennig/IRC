@@ -29,7 +29,7 @@ void	Client::setSocket(int i, int socket) {
 }
 
 void	Client::initSocket() {
-	for (int i = 0; _clientSocket[i]; i++) {
+	for (int i = 0; i < MAXCLIENT; i++) {
         _clientSocket[i] = 0;
     }
 }

@@ -7,7 +7,7 @@
 # include <string>
 # include <limits>
 # include <exception>
-
+//struct serv, class des exceptions, retaper class client
 class ServerActor {
 
 	private:

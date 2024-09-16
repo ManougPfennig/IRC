@@ -1,6 +1,6 @@
 NAME = ircserv
 SRCS = main.cpp checkArgs.cpp utils.cpp openServer.cpp ServerActor.cpp Client.cpp
-FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror
+FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror -g3 #-fsanitize=address
 OBJS = ${SRCS:.cpp=.o}
 
 ${NAME}: ${OBJS}
