@@ -1,12 +1,13 @@
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
-#include "ServerActor.hpp"
+# define MAXCLIENT 10
+
 #include "ircserv.hpp"
+#include "ServerActor.hpp"
 
 class Client {
 	private:
-		int	_clientSocket[MAXCLIENT];
 
 	public:
 

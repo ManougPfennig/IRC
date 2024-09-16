@@ -9,9 +9,9 @@ int	main(int ac, char **av)
 
 	try
 	{
-		ServerActor	serv;
+		t_server	serv;
 		openServer(serv, av[1], av[2]);
-		std::cout << "Port: " << serv.getPort() << " Password: " << serv.getPassword() << std::endl;
+		std::cout << "Port: " << serv.port << " Password: " << serv.password << std::endl;
 	}
 	catch(const std::exception& e)
 	{

@@ -11,6 +11,7 @@
 # include <string>
 # include <limits>
 # include <exception>
+# include <map>
 
 # include <sys/select.h>	// For select()
 # include <sys/types.h>		// For socket(), fstat()
@@ -27,21 +28,6 @@
 # include "Client.hpp"
 
 // -------------------------
-// FUNCTION DECLARATION LIST
-// -------------------------
-
-int			parsing( int ac, char **av );
-bool		isStrDigits( char *str );
-std::string	getInput( void );
-void		openServer( ServerActor &serv, char *port, char *password );
-
-// Messages Printing
-
-void		displayLaunchExemple( void );
-void		printPortHelp( void );
-
-
-// -------------------------
 // MACROS
 // -------------------------
 
@@ -49,7 +35,6 @@ void		printPortHelp( void );
 
 # define ERROR 1
 # define ALLGOOD 0
-# define MAXCLIENT 10
 # define BUFFERSIZE 1024
 
 // Terminal Text Colors
@@ -71,5 +56,52 @@ Avoid reserved ports (0-1023): These are reserved for system services like HTTP 
 Any port between 1024 and 65535 should do."
 
 # define PASSHELPMESSAGE "Password should be at least one character long."
+
+
+// -------------------------
+// SERVER INFORMATION STRUCTURE
+// -------------------------
+
+typedef struct	s_serverinfo {
+
+
+	int					port;
+	int					server_fd;
+	int					client_socket_descriptor;
+	int					max_fd;
+	int					activity;
+	int					new_client;
+	int					valueread;
+	int					serverSocket;
+
+	fd_set				readfds;
+	fd_set				writefds;
+	fd_set				exceptfds;
+
+	struct sockaddr_in6	address6;
+
+	char				buffer[BUFFERSIZE];
+	std::string			password;
+
+	Client				client;
+	int	_clientSocket[MAXCLIENT];
+
+}				t_server;
+
+// -------------------------
+// FUNCTION DECLARATION LIST
+// -------------------------
+
+int			parsing( int ac, char **av );
+bool		isStrDigits( char *str );
+std::string	getInput( void );
+void		openServer( t_server &serv, char *port, char *password );
+void		serverLoop( t_server &serv );
+
+// Messages Printing
+
+void		displayLaunchExemple( void );
+void		printPortHelp( void );
+
 
 #endif
