@@ -65,6 +65,13 @@ class ServerActor {
 			return ("[SELECT ERROR] Something wrong happened, please try again...");
 		}
 	};
+	class ClientAcceptFailed : public std::exception
+	{
+		const char *what() const throw()
+		{
+			return ("[CLIENT ACCEPT()] Something wrong happened, please try again...");
+		}
+	};
 };
 
 #endif

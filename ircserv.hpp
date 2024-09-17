@@ -12,6 +12,7 @@
 # include <limits>
 # include <exception>
 # include <map>
+# include <vector>
 
 # include <sys/select.h>	// For select()
 # include <sys/types.h>		// For socket(), fstat()
@@ -36,6 +37,7 @@
 # define ERROR 1
 # define ALLGOOD 0
 # define BUFFERSIZE 1024
+# define MAXCLIENT 100
 
 // Terminal Text Colors
 
@@ -67,12 +69,12 @@ typedef struct	s_serverinfo {
 
 	int					port;
 	int					server_fd;
-	int					client_socket_descriptor;
-	int					max_fd;
+	int					nfds;
 	int					activity;
 	int					new_client;
 	int					valueread;
 	int					serverSocket;
+	int					addrlen;
 
 	fd_set				readfds;
 	fd_set				writefds;
@@ -83,8 +85,7 @@ typedef struct	s_serverinfo {
 	char				buffer[BUFFERSIZE];
 	std::string			password;
 
-	Client				client;
-	int	_clientSocket[MAXCLIENT];
+	std::map<int, Client> clientMap;
 
 }				t_server;
 
