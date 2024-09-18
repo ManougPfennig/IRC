@@ -81,7 +81,7 @@ void	serverLoop( t_server &serv ) {
 			if (FD_ISSET(it->first, &serv.readfds))
 			{
 				// If read() returns 0, client is disconnecting and associated data is cleaned
-				if ((serv.valueread = read(it->first, serv.buffer, 1024)) == 0)
+				if ((serv.valueread = read(it->first, serv.buffer, BUFFERSIZE - 1)) == 0)
 				{
 					// Displaying which client has disconnected
 					char ip_str[INET6_ADDRSTRLEN];
@@ -90,6 +90,11 @@ void	serverLoop( t_server &serv ) {
 					std::cout << "Déconnexion de " << ip_str << ":" << ntohs(serv.address6.sin6_port) << std::endl;
 					clientsToRemove.push_back(it->first);
 				}
+				// DO NOT DELETE THIS
+				// else if (strstr(serv.buffer, "\r\n")) {
+				// 	serv.buffer[serv.valueread] = '\0';
+                // 	std::cout << "Complete message received: " << serv.buffer << std::endl;
+            	// }
 				else
 				{
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
@@ -106,7 +111,7 @@ void	serverLoop( t_server &serv ) {
 				//par exemple par un send(client_socket_descriptor, buff, len, flag (normalement mettre 0) );
 			}
 		}
-		// Removing 
+		// Removing clients that has disconnected
 		for (std::vector<int>::const_iterator rm = clientsToRemove.begin(); rm != clientsToRemove.end(); rm++)
 		{
 			serv.clientMap.erase(*rm);

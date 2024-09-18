@@ -1,0 +1,47 @@
+{NOTES PERSO CARLA}
+
+(desole j'ai push ca mais c'est pour etre sure de retrouver, je delete demain)
+
+
+HEXCHAT:
+
+Complete message received: CAP LS 302
+PASS pass
+NICK carla
+USER carla 0 * :carla
+
+
+
+
+CAP LS 302
+
+PASS pass\r\nNICK nickname\r\nUSER username 0 * :realname\r\n
+
+
+split \r\n into vector par ex (or anything else, temporairement)
+-> 1 for netcat 1 for hexchat (\0 , \r\n)
+into same checkPassword, setClientInfos etc.
+
+use same parsing or almost the same (\0 , \r\n) for /JOIN etc. puis pointeur sur fonction (with all the possibilites of commands)
+
+
+for later when working with channels:
+put inside eahc client class which channels are join
+
+
+
+RPL:
+
+:prefix code target :message
+:127.0.0.1 001 carla :Welcome to the Internet Relay Network carla@localhost
+
+MOST USED (but check irc offi doc to see them all):
+
+001 — RPL_WELCOME : Message de bienvenue.
+002 — RPL_YOURHOST : Informations sur le serveur.
+003 — RPL_CREATED : Date de création du serveur.
+004 — RPL_MYINFO : Détails sur le serveur (nom, version, options).
+353 — RPL_NAMREPLY : Liste des utilisateurs dans un canal.
+372 — RPL_MOTD : Message du jour du serveur (MOTD).
+376 — RPL_ENDOFMOTD : Fin du MOTD.
+433 — ERR_NICKNAMEINUSE : Pseudo déjà utilisé.
