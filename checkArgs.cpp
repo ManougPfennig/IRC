@@ -33,12 +33,18 @@ int	parsing(int ac, char **av)
 		return (ERROR);
 	}
 
-	// Check if the password is not empty
-	if (strlen(av[2]) < 1)
-	{
-		std::cout << RED << "Error: " << RESET << PASSHELPMESSAGE << std::endl;
-		return (ERROR);
-	}
+	// Check if the password is valid
+	if (strlen(av[2]) == 0)
+		std::cout << MAGENTA << "Note: " << RESET << "Connexion will not be password protected" << std::endl;
+	else
+		for (int i = 0; av[2][i]; i++)
+		{
+			if (isspace(av[2][i]))
+			{
+				std::cout << RED << "Error: " << RESET << PASSHELPMESSAGE << std::endl;
+				return (ERROR);
+			}
+		}
 
 	return (ALLGOOD);
 }

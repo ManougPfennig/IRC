@@ -1,5 +1,6 @@
 NAME = ircserv
-SRCS = main.cpp checkArgs.cpp utils.cpp openServer.cpp ServerActor.cpp Client.cpp serverLoop.cpp
+SRCS =	main.cpp checkArgs.cpp utils.cpp Client.cpp ServerException.cpp \
+		openServer.cpp serverLoop.cpp messageParsing.cpp clientRegistration.cpp
 FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror -g3 #-fsanitize=address
 OBJS = ${SRCS:.cpp=.o}
 

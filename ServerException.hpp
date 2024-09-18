@@ -1,5 +1,5 @@
-#ifndef SERVERCLASS_H
-# define SERVERCLASS_H
+#ifndef SERVEREXCEPTION_H
+# define SERVEREXCEPTION_H
 
 # include <iostream>
 # include <iomanip>
@@ -7,35 +7,16 @@
 # include <string>
 # include <limits>
 # include <exception>
-//struct serv, class des exceptions, retaper class client
-class ServerActor {
+
+class ServerException {
 
 	private:
-		int			_serverSocket;
-		int			_port;
-		std::string _password;
 
 	public:
-		~ServerActor( void );
-		ServerActor( void );
-		ServerActor( const ServerActor &sa );
-		ServerActor &operator=( const ServerActor &sa );
-
-		// _serverSocket variable interaction
-
-		int		getServerSocket( void ) const;
-		void	setServerSocket( const int &socket );
-
-		// _port variable interaction
-
-		int		getPort( void ) const;
-		void	setPort( const int &port );
-
-		// _password variable interaction
-
-		std::string	getPassword( void ) const;
-		void		setPassword( const std::string &password );
-
+		~ServerException( void );
+		ServerException( void );
+		ServerException( const ServerException &sa );
+		ServerException &operator=( const ServerException &sa );
 
 	class SocketCreationFailed : public std::exception
 	{

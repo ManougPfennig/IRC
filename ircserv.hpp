@@ -25,7 +25,7 @@
 # include <signal.h>		// For signal(), sigaction()
 # include <cstring>			// For memset(), strerror()
 
-# include "ServerActor.hpp"
+# include "ServerException.hpp"
 # include "Client.hpp"
 
 // -------------------------
@@ -57,7 +57,7 @@ in the range of 1 to 65535 can be used, as long as the port isn't already in use
 Avoid reserved ports (0-1023): These are reserved for system services like HTTP (80), SSH (22), and others.\n\
 Any port between 1024 and 65535 should do."
 
-# define PASSHELPMESSAGE "Password should be at least one character long."
+# define PASSHELPMESSAGE "Password should not contain whitespaces."
 
 
 // -------------------------
@@ -66,15 +66,16 @@ Any port between 1024 and 65535 should do."
 
 typedef struct	s_serverinfo {
 
+	std::string			password;
 
-	int					port;
-	int					server_fd;
-	int					nfds;
-	int					activity;
-	int					new_client;
-	int					valueread;
-	int					serverSocket;
-	int					addrlen;
+	int					port = 0;
+	int					server_fd = 0;
+	int					nfds = 0;
+	int					activity = 0;
+	int					new_client = 0;
+	int					valueread = 0;
+	int					serverSocket = 0;
+	int					addrlen = 0;
 
 	fd_set				readfds;
 	fd_set				writefds;
@@ -83,11 +84,17 @@ typedef struct	s_serverinfo {
 	struct sockaddr_in6	address6;
 
 	char				buffer[BUFFERSIZE];
-	std::string			password;
 
 	std::map<int, Client> clientMap;
 
 }				t_server;
+
+typedef struct	s_channelInfo {
+
+	std::string	name;
+
+}				t_channel;
+
 
 // -------------------------
 // FUNCTION DECLARATION LIST
@@ -98,6 +105,8 @@ bool		isStrDigits( char *str );
 std::string	getInput( void );
 void		openServer( t_server &serv, char *port, char *password );
 void		serverLoop( t_server &serv );
+void		messageParsing( t_server &serv );
+void		clientRegistration( t_server &serv, int clientFd );
 
 // Messages Printing
 

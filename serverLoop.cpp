@@ -41,7 +41,7 @@ void	serverLoop( t_server &serv ) {
 
 		// Waiting for any incoming activity
 		if (serv.activity = select(serv.nfds + 1, &serv.readfds, &serv.writefds, &serv.exceptfds, NULL) < 0)
-			throw (ServerActor::SelectFailed());
+			throw (ServerException::SelectFailed());
 		else
 			std::cout << "Activity detected." << std::endl;
 
@@ -52,9 +52,11 @@ void	serverLoop( t_server &serv ) {
 			{
 				serv.new_client = accept(serv.serverSocket, (struct sockaddr *)&serv.address6, (socklen_t *)&serv.addrlen);
 				if (serv.new_client < 0)
-					throw (ServerActor::ClientAcceptFailed());
+					throw (ServerException::ClientAcceptFailed());
 				// If connexion is accepted successfully, the new client Fd is associated with a new Client instance and added to clientMap
 				serv.clientMap.insert(std::make_pair(serv.new_client, Client()));
+				// Send the first registration message to the new client
+				clientRegistration(serv, serv.new_client);
 			}
 			catch (const std::exception& e)
 			{
@@ -93,7 +95,8 @@ void	serverLoop( t_server &serv ) {
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
 					serv.buffer[serv.valueread] = '\0';
 					std::cout << "Message received : " << serv.buffer << &(it->second) << std::endl;
-					//donnes entrantes a gerer ici (parser commandes etc etc...)
+					send(it->first, serv.buffer, strlen(serv.buffer), 0);
+					messageParsing(serv);
 				}
 			}
 			// A VERIFIER CE QUE CA VEUT DIRE LOL
