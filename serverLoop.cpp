@@ -56,7 +56,8 @@ void	serverLoop( t_server &serv ) {
 				// If connexion is accepted successfully, the new client Fd is associated with a new Client instance and added to clientMap
 				serv.clientMap.insert(std::make_pair(serv.new_client, Client()));
 				// Send the first registration message to the new client
-				clientRegistration(serv, serv.new_client);
+				std::cout << "PASSES HERE FIRST" << std::endl;
+				// clientRegistration(serv, serv.new_client);
 			}
 			catch (const std::exception& e)
 			{
@@ -99,12 +100,13 @@ void	serverLoop( t_server &serv ) {
 				{
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
 					serv.buffer[serv.valueread] = '\0';
-					std::cout << "Message received : " << serv.buffer << &(it->second) << std::endl;
-					send(it->first, serv.buffer, strlen(serv.buffer), 0);
-					messageParsing(serv);
+					std::cout << "Message received :    |" << serv.buffer << "|    par     " << &(it->second) << std::endl << std::endl;
+					if (it->second.getRegistered() == false)
+						registerNewClient(serv, it->first);
+					// send(it->first, serv.buffer, strlen(serv.buffer), 0);
+					// messageParsing(serv);
 				}
 			}
-			// A VERIFIER CE QUE CA VEUT DIRE LOL
 			if (FD_ISSET(it->first, &serv.writefds))
 			{
 				//donnees sortantes a gerer ici

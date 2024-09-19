@@ -107,11 +107,12 @@ void		openServer( t_server &serv, char *port, char *password );
 void		serverLoop( t_server &serv );
 void		messageParsing( t_server &serv );
 void		clientRegistration( t_server &serv, int clientFd );
+void		registerNewClient(t_server &serv, int);
 
 // Messages Printing
 
-void		displayLaunchExemple( void );
-void		printPortHelp( void );
+// void		displayLaunchExemple( void );
+// void		printPortHelp( void );
 
 
 #endif

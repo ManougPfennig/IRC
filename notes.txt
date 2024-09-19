@@ -45,3 +45,11 @@ MOST USED (but check irc offi doc to see them all):
 372 — RPL_MOTD : Message du jour du serveur (MOTD).
 376 — RPL_ENDOFMOTD : Fin du MOTD.
 433 — ERR_NICKNAMEINUSE : Pseudo déjà utilisé.
+
+
+
+
+connection avec Hexchat : 
+passe en premier dans la fonction ou on clientMap.insert
+puis DIRECTEMENT dans la fonction ou on lis un msg, qui est le suivant :
+CAP LS 302\r\nPASS pass\r\nNICK carla\r\nUSER carla 0 * :carla\r\n
