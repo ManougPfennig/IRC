@@ -1,5 +1,11 @@
 #include "ircserv.hpp"
 
+void	sendMsg( int fd, char *str )
+{
+	send(fd, str, strlen(str), 0);
+	return ;
+}
+
 // Checks whether the string is made entirely of numeric characters
 bool isStrDigits( char *str )
 {

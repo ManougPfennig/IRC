@@ -116,6 +116,7 @@ void		serverLoop( t_server *serv );
 void		messageParsing( t_server *serv );
 void		clientRegistration( t_server *serv, int clientFd );
 void		registerNewClient(t_server *serv, int);
+void		sendMsg( int fd, char *str );
 
 // utils
 std::string	getInput( void );
@@ -123,12 +124,18 @@ bool		isStrDigits( char *str );
 char		**ft_split( const char *str, const char *charset );
 void		freeTab( char **tab );
 
+// Commands
+
+void	PASS(t_server *serv, int key, std::string arg);
+void	NICK(t_server *serv, int key, std::string arg);
+void	USER(t_server *serv, int key, std::string arg);
+
 // Messages Printing
 
 // void		displayLaunchExemple( void );
 // void		printPortHelp( void );
 
 
-extern const char	*cmdList[];
+extern const char	*cmdType[];
 
 #endif

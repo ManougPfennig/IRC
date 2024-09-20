@@ -44,7 +44,7 @@ void	serverLoop( t_server *serv ) {
 				serv->clientMap.insert(std::make_pair(serv->new_client, Client()));
 				std::cout << "New connexion...\n";
 				// Sending authentification message to client
-				send(serv->new_client, "Start registration using command 'PASS <password>' :\n", 54, 0);
+				sendMsg(serv->new_client, "Start registration using command 'PASS <password>' :\n");
 			}
 			catch (const std::exception& e)
 			{
