@@ -33,3 +33,98 @@ std::string	getInput( void )
 	}
 	return (input);
 }
+
+int	ft_sep(char c, const char *charset)
+{
+	int i = 0;
+	while (charset[i] != '\0')
+	{
+		if (charset[i] == c)
+			return (1);
+		i++;
+	}
+	if (c == '\0')
+		return (1);
+	return (0);
+}
+
+int	ft_word_number(char *str, const char *charset)
+{
+	int	i;
+	int	number;
+
+	i = 0;
+	number = 0;
+	while (str[i])
+	{
+		if (ft_sep(str[i + 1], charset) == 1
+			&& ft_sep(str[i], charset) == 0)
+			number++;
+		i++;
+	}
+	return (number);
+}
+
+char	*ft_copy_word(char *dest, char *str, const char *charset)
+{
+	int	i;
+
+	i = 0;
+	while (ft_sep(str[i], charset) == 0)
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+void	ft_fill_tab(char **split, char *str, const char *charset)
+{
+	int	count;
+	int	i;
+	int	j;
+
+	count = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (ft_sep(str[i], charset) == 1)
+			i++;
+		else
+		{
+			j = 0;
+			while (ft_sep(str[i + j], charset) == 0)
+				j++;
+			split[count] = (char *)malloc(sizeof(char) * (j + 1));
+			ft_copy_word(split[count], str + i, charset);
+			i = i + j;
+			count++;
+		}
+	}
+}
+
+char	**ft_split(const char *str, const char *charset)
+{
+	int		tab_len;
+	char	**tab;
+
+	if (!str)
+		return (NULL);
+	tab_len = ft_word_number((char *)str, charset);
+	tab = (char **)malloc(sizeof(char *) * (tab_len + 1));
+	if (!tab)
+		return (NULL);
+	tab[tab_len] = 0;
+	ft_fill_tab(tab, (char *)str, charset);
+	return (tab);
+}
+
+void	freeTab(char **tab)
+{
+	for (int i = 0; tab && tab[i]; i++)
+		free(tab[i]);
+	if (tab)
+		free(tab);
+	return ;
+}

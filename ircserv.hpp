@@ -59,6 +59,8 @@ Any port between 1024 and 65535 should do."
 
 # define PASSHELPMESSAGE "Password should not contain whitespaces."
 
+# define AUTH_MESSAGE "Register using 'PASS ...' then 'NICK ...' then 'USER ...'\n"
+
 
 // -------------------------
 // SERVER INFORMATION STRUCTURE
@@ -95,24 +97,38 @@ typedef struct	s_channelInfo {
 
 }				t_channel;
 
+typedef struct	s_commandInfo {
+
+	std::string	cmd;
+	std::string	arg;
+
+}				t_cmd;
+
 
 // -------------------------
 // FUNCTION DECLARATION LIST
 // -------------------------
 
+// server operation
 int			parsing( int ac, char **av );
-bool		isStrDigits( char *str );
+void		openServer( t_server *serv, char *port, char *password );
+void		serverLoop( t_server *serv );
+void		messageParsing( t_server *serv );
+void		clientRegistration( t_server *serv, int clientFd );
+void		registerNewClient(t_server *serv, int);
+
+// utils
 std::string	getInput( void );
-void		openServer( t_server &serv, char *port, char *password );
-void		serverLoop( t_server &serv );
-void		messageParsing( t_server &serv );
-void		clientRegistration( t_server &serv, int clientFd );
-void		registerNewClient(t_server &serv, int);
+bool		isStrDigits( char *str );
+char		**ft_split( const char *str, const char *charset );
+void		freeTab( char **tab );
 
 // Messages Printing
 
 // void		displayLaunchExemple( void );
 // void		printPortHelp( void );
 
+
+extern const char	*cmdList[];
 
 #endif

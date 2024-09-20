@@ -1,68 +1,99 @@
 #include "ircserv.hpp"
 
-std::vector<std::string>	split(std::string str, char delim) {
-	std::vector<std::string>	vec;
-	std::string					temp;
-
-	for (std::size_t i = 0; i < str.size(); ++i) {
-		if (str[i] != delim) {
-			temp += str[i];
-		}
-		else {
-			if (!temp.empty()) {
-				vec.push_back(temp);
-				temp.clear();
-			}
-		}
+int	whichCommand(std::string cmd)
+{
+	int i = 0;
+	while (cmdList[i])
+	{
+		if (cmd == cmdList[i])
+			return (i);
+		i++;
 	}
-	if (!temp.empty()) {
-		vec.push_back(temp);
-	}
-	return vec;
+	return (-1);
 }
 
-void	registerNewClient(t_server &serv, int key) {
+std::vector<std::string>	formatCommand(char **cmds)
+{
+	std::string					tmp;
+	std::vector<std::string>	list;
 
-	std::string					toParse = serv.buffer;
-	std::string					delim = "\r\n";
-	std::vector<std::string>	vec;
-	std::vector<std::string>	splitted = split(toParse, '\n');
-	size_t						found;
-
-	for (std::size_t i = 0; i < splitted.size(); ++i) {
-		std::vector<std::string> words = split(splitted[i], ' ');
-		if (!words.empty()) {
-			if (words[0] == "PASS" && words.size() > 1) {
-				vec.push_back(words[1]);
-			}
-			else if (words[0] == "NICK" && words.size() > 1) {
-				vec.push_back(words[1]);
-			}
-			else if (words[0] == "USER" && words.size() > 1) {
-				vec.push_back(words[1]);
-				vec.push_back(words[4].erase(0, 1));
-				//cette derniere ligne chope le dernier mot et retire le ":" devant
-			}
-		}
+	for (int i = 0; cmds[i]; i++)
+	{
+		tmp = cmds[i];
+		// Checks if the first word of the line is a command, if yes it will add the line to the list of commands
+		if (whichCommand(tmp.substr(0, tmp.find_first_of(' '))) >= 0)
+			list.push_back(tmp);
+		else
+			std::cout << "Bad format" << std::endl;
 	}
+	return (list);
+}
 
-	//debug
-	for (std::size_t i = 0; i < splitted.size(); ++i) {
-		std::cout << "splitted:" << splitted[i] << std::endl;
-	}
-	for (std::size_t i = 0; i < vec.size(); ++i) {
-		std::cout << "vec:" << vec[i] << std::endl;
-	}
+void	registerNewClient(t_server *serv, int key)
+{
 
-	//ceci ne fonctionne pas, a regler demain (surement une histoire de whitespace qui fait qu'il pense que ce ne sont pas les memes)
-	// if (vec[0] == serv.password) {
-	// 	std::cout << "GOOD PASSWORD" << std::endl;
+	char						**toParse;
+	std::vector<std::string>	cmds;
+
+	std::cout << "msg:" << serv->buffer << ":" << std::endl;
+	toParse = ft_split(serv->buffer, "\r\n");
+	cmds = formatCommand(toParse);
+	for (auto it = cmds.begin(); it != cmds.end(); it++)
+	{
+		std::cout << "cmd:-" << *it << "-" << std::endl;
+	}
+	// while (toParse.length())
+	// {
+	// 	// Make a substring containg only the command
+	// 	cmd = toParse.substr(0, toParse.find_first_of(' '));
+	// 	// Then remove that part from toParse
+	// 	toParse = toParse.erase(0, toParse.find_first_of(' ') + 1);
+
+	// 	// Make a substring containing the following word (the command's argument)
+	// 	cmdValue = toParse.substr(0, std::min(toParse.find_first_of('\n'), toParse.find_first_of('\t')));
+
+	// 	// Find the command in the list if it exist
+	// 	int y = 0;
+	// 	while (cmdList[y] != NULL && cmd != cmdList[y])
+	// 		y++;
+
+	// 	// Skip whitespaces following the command
+	// 	switch (y)
+	// 	{
+	// 		case 0: // PASS
+	// 		{
+	// 			if (serv->password == cmdValue)
+	// 			{
+	// 				std::cout << "\ngot password right" << std::endl;
+	// 				serv->clientMap[key].SetPassed(true);
+	// 			}
+	// 			toParse = toParse.erase(0, std::max(toParse.find_first_of('\n'), toParse.find_first_of('\t')) + 1);
+	// 			break;
+	// 		}
+
+	// 		case 1: // NICK
+	// 		{
+	// 			serv->clientMap[key].setNickname(cmdValue);
+	// 			std::cout << "\nset nickname to" << serv->clientMap[key].getNickname() << std::endl;
+	// 			toParse = toParse.erase(0, std::max(toParse.find_first_of('\n'), toParse.find_first_of('\t')) + 1);
+	// 			break;
+	// 		}
+
+	// 		case 2: // USER
+	// 		{
+	// 			serv->clientMap[key].setUsername(cmdValue);
+	// 			std::cout << "\nset username to" << serv->clientMap[key].getUsername() << std::endl;
+	// 			toParse = toParse.erase(0, std::max(toParse.find_first_of('\n'), toParse.find_first_of('\t')) + 1);
+	// 			break;
+	// 		}
+			
+	// 		case 3: // NOT A COMMAND
+	// 		{
+	// 			toParse = toParse.erase(0, 1);
+	// 			break;
+	// 		}
+	// 	}
 	// }
-
-
-	serv.clientMap[key].setNickname(vec[1]);
-	serv.clientMap[key].setUsername(vec[2]);
-	serv.clientMap[key].setRealname(vec[3]);
 
 	return ;
 }

@@ -1,5 +1,13 @@
 #include "ircserv.hpp"
 
+const char	*cmdList[] = {
+	"PASS",
+	"NICK",
+	"USER",
+	"QUIT",
+	NULL,
+};
+
 int	main(int ac, char **av)
 {
 	// Checks if port and password arguments are valid
@@ -12,10 +20,10 @@ int	main(int ac, char **av)
 		t_server	serv;
 
 		// Opening the server's socket for connexion
-		openServer(serv, av[1], av[2]);
+		openServer(&serv, av[1], av[2]);
 
 		// Settings up the server to listen for incoming messages and interpreting them
-		serverLoop(serv);
+		serverLoop(&serv);
 
 		// Closing the server
 		close(serv.serverSocket);
