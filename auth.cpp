@@ -35,13 +35,13 @@ void	registerNewClient(t_server *serv, int key)
 	char						**toParse;
 	std::vector<std::string>	cmds;
 
-	std::cout << "msg:" << serv->buffer << ":" << std::endl;
 	toParse = ft_split(serv->buffer, "\r\n");
 	cmds = formatCommand(toParse);
 	for (auto it = cmds.begin(); it != cmds.end(); it++)
 	{
 		std::cout << "cmd:-" << *it << "-" << std::endl;
 	}
+	send(key, "You are now successfully logged in\n", 35, 0);
 	// while (toParse.length())
 	// {
 	// 	// Make a substring containg only the command

@@ -1,14 +1,3 @@
-		// for (int i = 0; i < MAXCLIENT; i++) {
-		// 	it->first = client.getSocket(i);
-		// 	if (it->first > 0)
-		// 		FD_SET(it->first, &serv->readfds);
-		// 		FD_SET(serv->serverSocket, &serv->writefds);
-		// 		FD_SET(serv->serverSocket, &serv->exceptfds);
-		// 	if (it->first > serv->nfds)
-		// 		serv->nfds = it->first;
-		// }
-
-
 #include "ircserv.hpp"
 
 void	serverLoop( t_server *serv ) {
@@ -53,8 +42,9 @@ void	serverLoop( t_server *serv ) {
 					throw (ServerException::ClientAcceptFailed());
 				// If connexion is accepted successfully, the new client Fd is associated with a new Client instance and added to clientMap
 				serv->clientMap.insert(std::make_pair(serv->new_client, Client()));
-				// set the client socket fd as non-blocking
 				std::cout << "New connexion...\n";
+				// Sending authentification message to client
+				send(serv->new_client, "Start registration using command 'PASS <password>' :\n", 54, 0);
 			}
 			catch (const std::exception& e)
 			{
@@ -88,11 +78,6 @@ void	serverLoop( t_server *serv ) {
 					std::cout << "Déconnexion de " << ip_str << ":" << ntohs(serv->address6.sin6_port) << std::endl;
 					clientsToRemove.push_back(it->first);
 				}
-				// DO NOT DELETE THIS
-				// else if (strstr(serv->buffer, "\r\n")) {
-				// 	serv->buffer[serv->valueread] = '\0';
-                // 	std::cout << "Complete message received: " << serv->buffer << std::endl;
-            	// }
 				else
 				{
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
