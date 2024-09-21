@@ -123,12 +123,14 @@ std::string	getInput( void );
 bool		isStrDigits( char *str );
 char		**ft_split( const char *str, const char *charset );
 void		freeTab( char **tab );
+bool		isInCharSet(char c, const char *charset);
 
 // Commands
 
 void	PASS(t_server *serv, int key, std::string arg);
 void	NICK(t_server *serv, int key, std::string arg);
 void	USER(t_server *serv, int key, std::string arg);
+void	QUIT(t_server *serv, int key, std::string arg);
 
 // Messages Printing
 

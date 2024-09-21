@@ -14,6 +14,41 @@ int	whichCommand(std::string cmd)
 	return (-1);
 }
 
+// "PASS",
+// "NICK",
+// "USER",
+// "QUIT",
+// "CAP",
+
+int	CheckForMissingAuthElements(t_server *serv, int key)
+{
+	int missingElem = 0;
+
+	// Checks if the client connected using the right password
+	if (serv->clientMap.find(key)->second.getPassed() == false)
+	{
+		sendMsg(key, "Send password using 'PASS <password>' :\n");
+		missingElem++;
+	}
+	else
+	{
+		// Checks if the client set a nickname
+		if (serv->clientMap.find(key)->second.getNickname().length() == 0)
+		{
+			sendMsg(key, "Set nickname using 'NICK <nickname>' :\n");
+			missingElem++;
+		}
+		
+		// Checks if the client set a username
+		if (serv->clientMap.find(key)->second.getUsername().length() == 0)
+		{
+			sendMsg(key, "Set username using 'USER <username>' :\n");
+			missingElem++;
+		}
+	}
+	return (missingElem);
+}
+
 void	registerNewClient(t_server *serv, int key)
 {
 
@@ -37,17 +72,17 @@ void	registerNewClient(t_server *serv, int key)
 			}
 			case 1: // NICK
 			{
+				NICK(serv, key, cmd.substr(cmd.find_first_of(' ') + 1));
 				break;
 			}
 			case 2: // USER
 			{
+				USER(serv, key, cmd.substr(cmd.find_first_of(' ') + 1));
 				break;
 			}
 			case 3: // QUIT
 			{
-				sendMsg(key, "Disconnecting from server.\n");
-				serv->clientMap.erase(key);
-				close(key);
+				QUIT(serv, key, cmd.substr(cmd.find_first_of(' ') + 1));
 				break;
 			}
 			case -1:
@@ -57,6 +92,11 @@ void	registerNewClient(t_server *serv, int key)
 			}
 		}
 	}
-
+	// When the Client has entered all necessary fields, registration is finished.
+	if (CheckForMissingAuthElements(serv, key) == 0)
+	{
+		serv->clientMap.find(key)->second.SetRegistered(true);
+		sendMsg(key, "You have registered successfully.\n");
+	}
 	return ;
 }

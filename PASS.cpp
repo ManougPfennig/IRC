@@ -3,7 +3,7 @@
 void	PASS(t_server *serv, int key, std::string arg)
 {
 	// Send info msg if client has already entered password 
-	if (serv->clientMap.count(key) > 0 && serv->clientMap.find(key)->second.getPassed() == true)
+	if (serv->clientMap.find(key)->second.getPassed() == true)
 	{
 		sendMsg(key, "You have already entered the correct password.\n");
 		return ;

@@ -6,6 +6,17 @@ void	sendMsg( int fd, const char *str )
 	return ;
 }
 
+// Returns true if C is in Charset, false otherwise.
+bool	isInCharSet(char c, const char *charset)
+{
+	for (int i = 0; charset[i]; i++)
+	{
+		if (c == charset[i])
+			return (true);
+	}
+	return (false);
+}
+
 // Checks whether the string is made entirely of numeric characters
 bool isStrDigits( char *str )
 {
