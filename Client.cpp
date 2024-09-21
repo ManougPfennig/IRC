@@ -4,7 +4,7 @@
 
 Client::~Client( void ) {}
 
-Client::Client( void ): _registered(false), _passed(false) {}
+Client::Client( void ) {}
 
 Client::Client( const Client &sa ) {}
 

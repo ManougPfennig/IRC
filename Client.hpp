@@ -10,9 +10,9 @@ class Client {
 	private:
 
 		// Has Client finished registration ?
-		bool	_registered;
+		bool	_registered = false;
 		// Has Client entered the server password ?
-		bool	_passed;
+		bool	_passed = false;
 
 		// Client information
 		std::string	_nickname;

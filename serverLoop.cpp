@@ -1,7 +1,7 @@
 #include "ircserv.hpp"
 
-void	serverLoop( t_server *serv ) {
-
+void	serverLoop( t_server *serv )
+{
 	std::map<int, Client>::const_iterator	it;
 	std::vector<int>						clientsToRemove;
 
@@ -68,6 +68,7 @@ void	serverLoop( t_server *serv ) {
 		{
 			if (FD_ISSET(it->first, &serv->readfds))
 			{
+				memset(serv->buffer, 0, BUFFERSIZE);
 				// If read() returns 0, client is disconnecting and associated data is cleaned
 				if ((serv->valueread = read(it->first, serv->buffer, BUFFERSIZE - 1)) == 0)
 				{

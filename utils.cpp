@@ -1,6 +1,6 @@
 #include "ircserv.hpp"
 
-void	sendMsg( int fd, char *str )
+void	sendMsg( int fd, const char *str )
 {
 	send(fd, str, strlen(str), 0);
 	return ;

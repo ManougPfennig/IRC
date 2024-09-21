@@ -17,14 +17,14 @@ int	whichCommand(std::string cmd)
 void	registerNewClient(t_server *serv, int key)
 {
 
-	char		**toParse;
+	char		**toParse = NULL;
 	std::string	cmd;
 
 	// Splitting the input into a list of commands
 	toParse = ft_split(serv->buffer, "\r\n");
 
 	// Looping through the list of commands to interpret
-	for (int i = 0; toParse[i]; i++)
+	for (int i = 0; toParse && toParse[i]; i++)
 	{
 		cmd = toParse[i];
 		// Finding which command has been sent and calling it

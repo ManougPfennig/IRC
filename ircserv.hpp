@@ -116,7 +116,7 @@ void		serverLoop( t_server *serv );
 void		messageParsing( t_server *serv );
 void		clientRegistration( t_server *serv, int clientFd );
 void		registerNewClient(t_server *serv, int);
-void		sendMsg( int fd, char *str );
+void		sendMsg( int fd, const char *str );
 
 // utils
 std::string	getInput( void );
