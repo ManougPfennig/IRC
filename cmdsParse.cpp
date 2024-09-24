@@ -34,8 +34,10 @@ void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::stri
 			//
 			sendMsg(clientFd, msg.c_str());
 		}
-		else
+		else {
 			sendMsg(clientFd, "Wrong password, please try again...\n");
+			return ;
+		}
 	}
 	else {
 		serv->channelMap[channelName].addClientToChannel(clientFd);
@@ -43,6 +45,12 @@ void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::stri
 		std::string	msg = "You joined " + channelName + "\n";
 		sendMsg(clientFd, msg.c_str());
 	}
+
+	// Send the JOIN message to tell the client it has joined the channel
+	std::string joinMsg = ":" + gC(serv, clientFd).getNickname() + " JOIN #" + channelName + "\r\n";
+	std::cout << joinMsg;
+	sendMsg(clientFd, joinMsg.c_str());
+
 }
 
 void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg) {

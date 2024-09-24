@@ -145,3 +145,9 @@ void	freeTab(char **tab)
 		free(tab);
 	return ;
 }
+
+// Returns the associated Client instance to specified key
+Client	&gC(t_server *serv, int key)
+{
+	return (serv->clientMap.find(key)->second);
+}

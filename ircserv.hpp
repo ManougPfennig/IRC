@@ -127,6 +127,7 @@ bool		isStrDigits( char *str );
 char		**ft_split( const char *str, const char *charset );
 void		freeTab( char **tab );
 bool		isInCharSet(char c, const char *charset);
+Client		&gC(t_server *serv, int key);
 
 // Commands
 
