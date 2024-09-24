@@ -83,6 +83,7 @@ void	serverLoop( t_server *serv )
 				{
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
 					serv->buffer[serv->valueread] = '\0';
+					std::cout << serv->buffer;
 					if (it->second.getRegistered() == false)
 						registerNewClient(serv, it->first);
 					else

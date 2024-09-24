@@ -89,8 +89,8 @@ typedef struct	s_serverinfo {
 
 	char				buffer[BUFFERSIZE];
 
-	std::map<int, Client> clientMap;
-	std::map<std::string, Channel> channelMap;
+	std::map<int, Client>			clientMap;
+	std::map<std::string, Channel>	channelMap;
 
 }				t_server;
 

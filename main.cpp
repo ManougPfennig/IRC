@@ -4,7 +4,6 @@ const char	*cmdType[] = {
 	"PASS",
 	"NICK",
 	"USER",
-	"QUIT",
 	"CAP",
 	NULL,
 };
