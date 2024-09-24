@@ -13,6 +13,7 @@
 # include <exception>
 # include <map>
 # include <vector>
+# include <sstream>
 
 # include <sys/select.h>	// For select()
 # include <sys/types.h>		// For socket(), fstat()
@@ -27,6 +28,7 @@
 
 # include "ServerException.hpp"
 # include "Client.hpp"
+# include "Channel.hpp"
 
 // -------------------------
 // MACROS
@@ -88,6 +90,7 @@ typedef struct	s_serverinfo {
 	char				buffer[BUFFERSIZE];
 
 	std::map<int, Client> clientMap;
+	std::map<std::string, Channel> channelMap;
 
 }				t_server;
 
@@ -131,6 +134,8 @@ void	PASS(t_server *serv, int key, std::string arg);
 void	NICK(t_server *serv, int key, std::string arg);
 void	USER(t_server *serv, int key, std::string arg);
 void	QUIT(t_server *serv, int key, std::string arg);
+void	cmdsParse(t_server *serv, int clientFd, std::string toParse);
+void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::string password);
 
 // Messages Printing
 

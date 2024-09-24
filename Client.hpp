@@ -13,8 +13,8 @@ class Client {
 		bool	_registered = false;
 		// Has Client entered the server password ?
 		bool	_passed = false;
-		// Is Client using Hexchat for connection ?
-		bool	_IsHexchat = false;
+
+		bool	_xChat = false;
 
 		// Client information
 		std::string	_nickname = "";
@@ -44,9 +44,6 @@ class Client {
 
 		std::string	getRealname( void ) const;
 		void		setRealname( std::string realname);
-
-		bool		getIsHexchat( void ) const;
-		void		setIsHexchat( bool hex );
 
 };
 

@@ -85,6 +85,8 @@ void	serverLoop( t_server *serv )
 					serv->buffer[serv->valueread] = '\0';
 					if (it->second.getRegistered() == false)
 						registerNewClient(serv, it->first);
+					else
+						cmdsParse(serv, it->first, std::string(serv->buffer));
 					// messageParsing(serv);
 				}
 			}
