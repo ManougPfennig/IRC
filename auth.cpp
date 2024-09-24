@@ -85,6 +85,12 @@ void	registerNewClient(t_server *serv, int key)
 				QUIT(serv, key, cmd.substr(cmd.find_first_of(' ') + 1));
 				break;
 			}
+			case 4: // CAP (sent by hexchat to notify of the used standard)
+			{
+				serv->clientMap.find(key)->second.setIsHexchat(true);
+				std::cout << "set CAP to true" << std::endl;
+				break;
+			}
 			case -1:
 			{
 				sendMsg(key, "Invalid command sent.\n");

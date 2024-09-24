@@ -71,3 +71,14 @@ void		Client::setRealname( std::string realname){
 	_realname = realname;
 	return ;
 }
+
+
+bool		Client::getIsHexchat( void ) const{
+
+	return (_IsHexchat);
+}
+void		Client::setIsHexchat( bool hex ){
+
+	_IsHexchat = hex;
+	return ;
+}
