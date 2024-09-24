@@ -51,14 +51,19 @@ void	Channel::addClientToChannel(int clientFd) {
 }
 
 void	Channel::removeClientFromChannel(int clientFd) {
-	std::vector<int>::iterator it = std::find(_clients.begin(), _clients.end(), clientFd);
-	if (it != _clients.end())
-		_clients.erase(it);
+	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
+		if (*it == clientFd){
+			_clients.erase(it);
+			return ;
+		}
+	}
 }
 
 bool	Channel::isClientInChannel(int clientFd) {
-	std::vector<int>::iterator it = std::find(_clients.begin(), _clients.end(), clientFd);
-	if (it != _clients.end())
-		return (true);
+	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
+		if (*it == clientFd){
+			return (true);
+		}
+	}
 	return (false);
 }

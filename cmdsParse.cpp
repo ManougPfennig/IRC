@@ -10,10 +10,8 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		std::string	key;
 		iss >> channelName;
 		iss >> key;
-		if (!channelName.empty() && !key.empty())
-			handleJoin(serv, clientFd, channelName, key);
 		if (!channelName.empty())
-			handleJoin(serv, clientFd, channelName, 0);
+			handleJoin(serv, clientFd, channelName, key);
 		else
 			sendMsg(clientFd, "Error: No channel name provided, please try again...\n");
 	}
