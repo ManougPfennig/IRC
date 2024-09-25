@@ -141,6 +141,7 @@ void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, s
 void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &channelName, std::string msg);
 void	broadcastLeaving(t_server *serv, std::string channelName, int senderFd, std::string msg);
 void	handlePart(t_server *serv, int clientFd, std::string &channelName, std::string msg);
+void	broadcastJoining(t_server *serv, std::string channelName, int senderFd);
 
 // Messages Printing
 
