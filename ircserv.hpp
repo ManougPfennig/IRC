@@ -137,6 +137,10 @@ void	USER(t_server *serv, int key, std::string arg);
 void	QUIT(t_server *serv, int key, std::string arg);
 void	cmdsParse(t_server *serv, int clientFd, std::string toParse);
 void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::string password);
+void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg);
+void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &channelName, std::string msg);
+void	broadcastLeaving(t_server *serv, std::string channelName, int senderFd, std::string msg);
+void	handlePart(t_server *serv, int clientFd, std::string &channelName, std::string msg);
 
 // Messages Printing
 
