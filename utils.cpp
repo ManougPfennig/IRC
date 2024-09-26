@@ -146,7 +146,7 @@ void	freeTab(char **tab)
 	return ;
 }
 
-// Returns the associated Client instance to specified key
+// Returns the associated Client instance to specified key in clientMap
 Client	&gC(t_server *serv, int key)
 {
 	return (serv->clientMap.find(key)->second);

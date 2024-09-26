@@ -37,12 +37,15 @@ void	serverLoop( t_server *serv )
 		{
 			try
 			{
+				// Accepting the new connection
 				serv->new_client = accept(serv->serverSocket, (struct sockaddr *)&serv->address6, (socklen_t *)&serv->addrlen);
 				if (serv->new_client < 0)
 					throw (ServerException::ClientAcceptFailed());
+
 				// If connexion is accepted successfully, the new client Fd is associated with a new Client instance and added to clientMap
 				serv->clientMap.insert(std::make_pair(serv->new_client, Client()));
 				std::cout << "New connexion...\n";
+
 				// Sending authentification message to client
 				sendMsg(serv->new_client, "Start registration using command 'PASS <password>' :\n");
 			}
@@ -69,6 +72,7 @@ void	serverLoop( t_server *serv )
 			if (FD_ISSET(it->first, &serv->readfds))
 			{
 				memset(serv->buffer, 0, BUFFERSIZE);
+
 				// If read() returns 0, client is disconnecting and associated data is cleaned
 				if ((serv->valueread = read(it->first, serv->buffer, BUFFERSIZE - 1)) == 0)
 				{
@@ -88,7 +92,6 @@ void	serverLoop( t_server *serv )
 						registerNewClient(serv, it->first);
 					else
 						cmdsParse(serv, it->first, std::string(serv->buffer));
-					// messageParsing(serv);
 				}
 			}
 			if (FD_ISSET(it->first, &serv->writefds))
@@ -97,7 +100,8 @@ void	serverLoop( t_server *serv )
 				//par exemple par un send(client_socket_descriptor, buff, len, flag (normalement mettre 0) );
 			}
 		}
-		// Removing clients that has disconnected
+
+		// Removing clients that has disconnected and closing their designated Fds
 		for (std::vector<int>::const_iterator rm = clientsToRemove.begin(); rm != clientsToRemove.end(); rm++)
 		{
 			serv->clientMap.erase(*rm);

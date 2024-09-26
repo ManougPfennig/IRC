@@ -1,10 +1,10 @@
 #include "ircserv.hpp"
 
+// Checking all connected clients to see if the Nickname is taken.
 bool	isNicknameTaken(t_server *serv, std::string name)
 {
 	std::map<int, Client>::const_iterator it;
 
-	// Checking all connected clients to see if the Nickname is taken.
 	for (it = serv->clientMap.begin(); it != serv->clientMap.end(); it++)
 	{
 		if (it->second.getNickname() == name)
@@ -13,6 +13,9 @@ bool	isNicknameTaken(t_server *serv, std::string name)
 	return (false);
 }
 
+// Checking the Nickname to see if it is in a valid format
+// Returns an empty string if no error was found
+// Otherwise, returns an appropriate error message
 const char *isNicknameValid(t_server *serv, std::string name)
 {
 	if (name.length() > 9 || name.length() == 0)

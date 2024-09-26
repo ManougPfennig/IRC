@@ -5,6 +5,9 @@ const char	*cmdType[] = {
 	"NICK",
 	"USER",
 	"CAP",
+	"JOIN",
+	"PART",
+	"PRIVMSG",
 	NULL,
 };
 

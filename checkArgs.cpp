@@ -1,12 +1,12 @@
 #include "ircserv.hpp"
 
+// Will open a prompt to offer help. User can answer 'y' for yes, or anything else for no
 void	surveyForHelp(void)
 {
-	std::string	answer;
-
-	// Opening a prompt to offer help
 	std::cout << YELLOW << "Would you like more info on ports ? y/n\n" << RESET;
-	answer = getInput();
+
+	// Opening the prompt
+	std::string	answer = getInput();
 	if (answer == "y")
 	{
 		std::cout << CYAN << PORTHELPMESSAGE << RESET << std::endl;

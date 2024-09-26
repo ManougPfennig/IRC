@@ -21,7 +21,7 @@ void	openServer( t_server *serv, char *port, char *password )
 		std::cout << "Server socket created." << std::endl;
 	std::cout << "debug:" << serv->server_fd << std::endl;
 
-	// Set address and port for server socket
+	// Set address and port for server socket, then binding it
 	serv->address6.sin6_family = AF_INET6;
 	serv->address6.sin6_addr = in6addr_any;
 	serv->address6.sin6_port = htons(serv->port);

@@ -1,6 +1,6 @@
 #include "ircserv.hpp"
 
-// Returns an index corresponding to the cmdType[] array defined in main(), useful for switch cases.
+// Returns an index corresponding to the cmdType[] array defined in main.cpp, useful for switch cases.
 // Returns -1 if the command doesn't exist.
 int	whichCommand(std::string cmd)
 {
@@ -14,17 +14,11 @@ int	whichCommand(std::string cmd)
 	return (-1);
 }
 
-// "PASS",
-// "NICK",
-// "USER",
-// "QUIT",
-// "CAP",
-
 int	CheckForMissingAuthElements(t_server *serv, int key)
 {
 	int missingElem = 0;
 
-	// Checks if the client connected using the right password
+	// Checks if the client connected using the right password, or send a message
 	if (serv->clientMap.find(key)->second.getPassed() == false)
 	{
 		sendMsg(key, "Send password using 'PASS <password>' :\n");
@@ -32,14 +26,14 @@ int	CheckForMissingAuthElements(t_server *serv, int key)
 	}
 	else
 	{
-		// Checks if the client set a nickname
+		// Checks if the client set a nickname, or send a message
 		if (serv->clientMap.find(key)->second.getNickname().length() == 0)
 		{
 			sendMsg(key, "Set nickname using 'NICK <nickname>' :\n");
 			missingElem++;
 		}
 		
-		// Checks if the client set a username
+		// Checks if the client set a username, or send a message
 		if (serv->clientMap.find(key)->second.getUsername().length() == 0)
 		{
 			sendMsg(key, "Set username using 'USER <username>' :\n");

@@ -30,7 +30,7 @@ void	USER(t_server *serv, int key, std::string arg)
 	}
 	else if (strlen(isUsernameValid(arg)) == 0)
 	{
-		// If no error is found, set the client's Username to it's new value.
+		// If no format error is found, set the client's Username to it's new value.
 		serv->clientMap.find(key)->second.setUsername(arg);
 		msg = "Username set to: " + arg + "\n";
 		sendMsg(key, msg.c_str());
