@@ -8,6 +8,7 @@ const char	*cmdType[] = {
 	"JOIN",
 	"PART",
 	"PRIVMSG",
+	"KICK",
 	NULL,
 };
 

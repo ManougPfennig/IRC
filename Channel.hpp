@@ -10,8 +10,10 @@ class Channel {
 	private:
 
 		std::string			_name = "";
-		std::vector<int>	_clients;
 		std::string			_password = "";
+		std::string			_topic = "";
+		std::vector<int>	_clients;
+		std::vector<int>	_operators;
 
 	public:
 
@@ -27,11 +29,16 @@ class Channel {
 		std::vector<int>	&getClientsOfChannel();
 		void				setPassword(std::string password);
 		std::string			getPassword(void) const;
+		void				setTopic(std::string topic);
+		std::string			getTopic(void) const;
 
 		//utils
 		void	addClientToChannel(int clientFd);
 		void	removeClientFromChannel(int clientFd);
 		bool	isClientInChannel(int clientFd);
+		void	addOperator(int clientFd);
+		void	removeOperator(int clientFd);
+		bool	isOperator(int clientFd) const;
 
 };
 

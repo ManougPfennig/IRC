@@ -3,12 +3,18 @@
 // Parses the command sent and launch the action needed 
 void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 
-	std::istringstream	iss(toParse);
-	std::string			command;
-	std::string			channelName;
+	// Keeping the command from the input string
+	std::string	command = toParse.substr(0, toParse.find_first_of(' '));
+	toParse.erase(0, toParse.find_first_of(' ') + 1);
 
-	iss >> command;
-	iss >> channelName;
+	// Keeping the channel from the input string
+	std::string	channelName = toParse.substr(0, std::min(toParse.find_first_of(' '), toParse.find_first_of('\r')));
+	toParse.erase(0, toParse.find_first_of(' ') + 1);
+
+	// Keeping the argument from the input string
+	std::string	arg = toParse;
+	if (arg[0] == ':')
+		arg.erase(0, 1);
 
 	// Checking if channelName is preceded by '#' for format, then removing it
 	if (!channelName.empty() && channelName[0] != '#') {
@@ -22,31 +28,28 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 	{
 		case 4: // JOIN
 		{
-			std::string	password;
-			iss >> password;
 			if (!channelName.empty())
-				handleJoin(serv, clientFd, channelName, password);
+				handleJoin(serv, clientFd, channelName, arg);
 			else
 				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break ;
 		}
 		case 5: // PART
 		{
-			std::string	msg;
-			iss >> msg;
 			if (!channelName.empty())
-				handlePart(serv, clientFd, channelName, msg);
+				handlePart(serv, clientFd, channelName, arg);
 			else
 				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break ;
 		}
 		case 6: // PRIVMSG
 		{
-			std::string	msg;
-			iss >> msg;
-			msg.erase(0,1);
-			broadcastToChannel(serv, channelName, clientFd, msg);
+			broadcastToChannel(serv, channelName, clientFd, arg);
 			break ;
+		}
+		case 7: // KICK
+		{
+			break;
 		}
 	}
 	return ;

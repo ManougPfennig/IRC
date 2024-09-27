@@ -38,6 +38,8 @@ void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, s
 		return ;
 	}
 
+	std::cout << "channel exists" << std::endl;
+
 	Channel				&channel = serv->channelMap[channelName];
 	std::vector<int>	&clients = channel.getClientsOfChannel();
 	std::string			senderU = gC(serv, senderFd).getUsername();
@@ -49,6 +51,7 @@ void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, s
 		if (*it != senderFd)
 			sendMsg(*it, fullmsg.c_str());
 	}
+	std::cout << fullmsg;
 	return ;
 }
 

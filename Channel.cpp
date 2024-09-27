@@ -31,26 +31,43 @@ void		Channel::setName( std::string name){
 }
 
 std::vector<int>	&Channel::getClientsOfChannel() {
+
 	return (_clients);
 }
 
 void				Channel::setPassword(std::string password) {
+
 	_password = password;
 	return ;
 }
 
 std::string			Channel::getPassword(void) const {
+
 	return (_password);
+}
+
+void				Channel::setTopic(std::string topic) {
+
+	_topic = topic;
+	return ;
+}
+
+std::string			Channel::getTopic(void) const {
+
+	return (_topic);
 }
 
 
 //utils
 
 void	Channel::addClientToChannel(int clientFd) {
+
 	_clients.push_back(clientFd);
+	return ;
 }
 
 void	Channel::removeClientFromChannel(int clientFd) {
+
 	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
 		if (*it == clientFd){
 			_clients.erase(it);
@@ -60,10 +77,43 @@ void	Channel::removeClientFromChannel(int clientFd) {
 }
 
 bool	Channel::isClientInChannel(int clientFd) {
+
 	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
 		if (*it == clientFd){
 			return (true);
 		}
+	}
+	return (false);
+}
+
+// Adds this client to the channel's operator list
+void	Channel::addOperator(int clientFd) {
+
+	_operators.push_back(clientFd);
+	return ;
+}
+
+// Removes this client to the channel's operator list
+void	Channel::removeOperator(int clientFd) {
+
+	for (std::vector<int>::const_iterator it = _operators.begin(); it != _operators.end(); it++)
+	{
+		if (*it == clientFd)
+		{
+			_operators.erase(it);
+			return ;
+		}
+	}
+	return ;
+}
+
+// Informs whether or not this client is in the operator list
+bool	Channel::isOperator(int clientFd) const {
+
+	for (std::vector<int>::const_iterator it = _operators.begin(); it != _operators.end(); it++)
+	{
+		if (*it == clientFd)
+			return (true);
 	}
 	return (false);
 }
