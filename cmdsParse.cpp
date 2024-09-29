@@ -29,7 +29,7 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 4: // JOIN
 		{
 			if (!channelName.empty())
-				handleJoin(serv, clientFd, channelName, arg);
+				JOIN(serv, clientFd, channelName, arg);
 			else
 				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break ;
@@ -37,7 +37,7 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 5: // PART
 		{
 			if (!channelName.empty())
-				handlePart(serv, clientFd, channelName, arg);
+				PART(serv, clientFd, channelName, arg);
 			else
 				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break ;
@@ -49,6 +49,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 7: // KICK
 		{
+			if (!channelName.empty())
+				KICK(serv, clientFd, channelName, arg);
+			else
+				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break;
 		}
 	}

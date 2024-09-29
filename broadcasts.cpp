@@ -32,18 +32,22 @@ void	broadcastJoining(t_server *serv, std::string channelName, int senderFd) {
 // Broadcast in Hexchat format a message sent by a channel member to all other channel members
 void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg) {
 
-	// Checks first if the channel exists
+	// Checks if the channel exists
 	if (serv->channelMap.find(channelName) == serv->channelMap.end()) {
 		sendMsg(senderFd, "Error: channel doesn't exist, please try again...\n");
 		return ;
 	}
 
-	std::cout << "channel exists" << std::endl;
-
 	Channel				&channel = serv->channelMap[channelName];
 	std::vector<int>	&clients = channel.getClientsOfChannel();
 	std::string			senderU = gC(serv, senderFd).getUsername();
 	std::string			senderN = gC(serv, senderFd).getNickname();
+
+	// Checks if the client is connected to the channel
+	if (channel.isClientInChannel(senderFd) == false) {
+		sendMsg(senderFd, "Error: You are not in this channel.\n");
+		return ;
+	}
 
 	// The message is formatted and broadcasted to all other clients in the channel
 	std::string	fullmsg = ":" + senderU + "!" + senderN + "@ircserv PRIVMSG #" + channelName + " :" + msg + "\r\n";
@@ -51,7 +55,32 @@ void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, s
 		if (*it != senderFd)
 			sendMsg(*it, fullmsg.c_str());
 	}
+	return ;
+}
+
+// Broadcast in Hexchat format that a client is leaving
+void	broadcastKick(t_server *serv, std::string channelName, int senderFd, int targetFd, std::string msg) {
+
+	// Checks first if the channel exists
+	if (serv->channelMap.find(channelName) == serv->channelMap.end()) {
+		sendMsg(targetFd, "Error: channel doesn't exist, please try again...\n");
+		return ;
+	}
+
+	Channel				&channel = serv->channelMap[channelName];
+	std::vector<int>	&clients = channel.getClientsOfChannel();
+	std::string			leaverU = gC(serv, targetFd).getUsername();
+	std::string			senderU = gC(serv, senderFd).getUsername();
+	std::string			senderN = gC(serv, senderFd).getNickname();
+
+	// :Admin!admin@localhost KICK #lol mapf :You have been removed
+
+	// The message is formatted and broadcasted to all other clients in the channel
+	std::string	fullmsg = ":" + senderU + "!" + senderN + "@ircserv KICK #" + channelName + " " + leaverU + " :" + msg + "\r\n";
 	std::cout << fullmsg;
+	for (std::vector<int>::iterator it = clients.begin(); it != clients.end(); ++it) {
+		sendMsg(*it, fullmsg.c_str());
+	}
 	return ;
 }
 

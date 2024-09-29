@@ -68,9 +68,18 @@ void	Channel::addClientToChannel(int clientFd) {
 
 void	Channel::removeClientFromChannel(int clientFd) {
 
+	// remove from _clients
 	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
 		if (*it == clientFd){
 			_clients.erase(it);
+			return ;
+		}
+	}
+
+	// remove from _operators
+	for (std::vector<int>::iterator it = _operators.begin(); it != _operators.end(); it++){
+		if (*it == clientFd){
+			_operators.erase(it);
 			return ;
 		}
 	}

@@ -113,13 +113,28 @@ typedef struct	s_commandInfo {
 // -------------------------
 
 // server operation
-int			parsing( int ac, char **av );
-void		openServer( t_server *serv, char *port, char *password );
-void		serverLoop( t_server *serv );
-void		messageParsing( t_server *serv );
-void		clientRegistration( t_server *serv, int clientFd );
-void		registerNewClient(t_server *serv, int);
-void		sendMsg( int fd, const char *str );
+int		parsing( int ac, char **av );
+void	openServer( t_server *serv, char *port, char *password );
+void	serverLoop( t_server *serv );
+void	messageParsing( t_server *serv );
+void	clientRegistration( t_server *serv, int clientFd );
+void	registerNewClient(t_server *serv, int);
+void	sendMsg( int fd, const char *str );
+void	cmdsParse(t_server *serv, int clientFd, std::string toParse);
+void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg);
+void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &channelName, std::string msg);
+void	broadcastLeaving(t_server *serv, std::string channelName, int senderFd, std::string msg);
+void	broadcastKick(t_server *serv, std::string channelName, int senderFd, int targetFd, std::string msg);
+void	broadcastJoining(t_server *serv, std::string channelName, int senderFd);
+
+// Commands
+void	PASS( t_server *serv, int key, std::string arg );
+void	NICK( t_server *serv, int key, std::string arg );
+void	USER( t_server *serv, int key, std::string arg );
+void	QUIT( t_server *serv, int key, std::string arg );
+void	PART( t_server *serv, int clientFd, std::string channelName, std::string msg );
+void	JOIN( t_server *serv, int clientFd, std::string channelName, std::string password );
+void	KICK( t_server *serv, int clientFd, std::string channelName, std::string arg );
 
 // utils
 std::string	getInput( void );
@@ -128,21 +143,11 @@ char		**ft_split( const char *str, const char *charset );
 void		freeTab( char **tab );
 bool		isInCharSet(char c, const char *charset);
 Client		&gC(t_server *serv, int key);
+int			gC(t_server *serv, std::string name);
 int			whichCommand(std::string cmd);
+bool		doesChannelExist(t_server *serv, std::string channelName);
+std::string formatMsg(t_server *serv, bool fromServer, int code, int clientFd, std::string command, std::string channelName, std::string message);
 
-// Commands
-
-void	PASS(t_server *serv, int key, std::string arg);
-void	NICK(t_server *serv, int key, std::string arg);
-void	USER(t_server *serv, int key, std::string arg);
-void	QUIT(t_server *serv, int key, std::string arg);
-void	cmdsParse(t_server *serv, int clientFd, std::string toParse);
-void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::string password);
-void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg);
-void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &channelName, std::string msg);
-void	broadcastLeaving(t_server *serv, std::string channelName, int senderFd, std::string msg);
-void	handlePart(t_server *serv, int clientFd, std::string &channelName, std::string msg);
-void	broadcastJoining(t_server *serv, std::string channelName, int senderFd);
 
 // Messages Printing
 

@@ -1,7 +1,7 @@
 #include "ircserv.hpp"
 
 // Launch the join command, creates and/or join a channel, handles password or not, then broadcast corresponding messages
-void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::string password) {
+void	JOIN(t_server *serv, int clientFd, std::string channelName, std::string password) {
 
 	// Checks first if the channel exists
 	if (serv->channelMap.find(channelName) == serv->channelMap.end())
@@ -14,8 +14,9 @@ void	handleJoin(t_server *serv, int clientFd, std::string channelName, std::stri
 		if (!password.empty())
 			serv->channelMap.find(channelName)->second.setPassword(password);
 
-		// Adds the creator to the channel
+		// Adds the creator to the channel, as operator
 		serv->channelMap[channelName].addClientToChannel(clientFd);
+		serv->channelMap[channelName].addOperator(clientFd);
 	}
 	else if (!serv->channelMap.find(channelName)->second.getPassword().empty())
 	{

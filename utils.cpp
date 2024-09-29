@@ -151,3 +151,52 @@ Client	&gC(t_server *serv, int key)
 {
 	return (serv->clientMap.find(key)->second);
 }
+
+// Returns the associated client Fd to specified username in clientMap
+// Returns -1 if client is not found
+int			gC( t_server *serv, std::string name) {
+
+	std::map<int, Client>::const_iterator it;
+
+	for (it = serv->clientMap.begin(); it != serv->clientMap.end(); it++)
+	{
+		if (it->second.getUsername() == name)
+			return (it->first);
+	}
+	return (-1);
+}
+
+
+// Will format the message according to Hexchat.
+// - Set the variable "fromServer" to true if it should be displayed as coming from the server
+// Returns ":ircserv code Username #channelName :message"
+// - Set the variable "fromServer" to false if it should be displayed as coming from a user
+// Returns ":Nickname!Username@ircserv command #channelName :message"
+std::string formatMsg(t_server *serv, bool fromServer, int code,int clientFd, std::string command, std::string channelName, std::string message)
+{
+	std::string formattedMsg;
+
+	if (fromServer == true)
+	{
+		formattedMsg = ":ircserv " + code + gC(serv, clientFd).getUsername() + " #" + channelName;
+		if (!message.empty())
+			formattedMsg += " :" + message;
+		formattedMsg += "\r\n";
+	}
+	else
+	{
+		formattedMsg = ":" + gC(serv, clientFd).getNickname() + "!" + gC(serv, clientFd).getUsername() + "@ircserv " + command + " #" + channelName;
+		if (!message.empty())
+			formattedMsg += " :" + message;
+		formattedMsg += "\r\n";
+	}
+	
+	return (formattedMsg);
+}
+
+bool	doesChannelExist(t_server *serv, std::string channelName)
+{
+	if (serv->channelMap.find(channelName) == serv->channelMap.end())
+		return (false);
+	return (true);
+}

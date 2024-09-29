@@ -1,7 +1,7 @@
 #include "ircserv.hpp"
 
 // Launch the part command, with the arguments sent (to leave one or multiple channels)
-void	handlePart(t_server *serv, int clientFd, std::string &channelName, std::string msg)
+void	PART(t_server *serv, int clientFd, std::string channelName, std::string msg)
 {
 	char	**tab = ft_split(channelName.c_str(), ",#");
 
