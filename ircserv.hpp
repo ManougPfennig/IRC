@@ -135,6 +135,7 @@ void	QUIT( t_server *serv, int key, std::string arg );
 void	PART( t_server *serv, int clientFd, std::string channelName, std::string msg );
 void	JOIN( t_server *serv, int clientFd, std::string channelName, std::string password );
 void	KICK( t_server *serv, int clientFd, std::string channelName, std::string arg );
+void	MODE( t_server *serv, int clientFd, std::string channelName, std::string arg );
 
 // utils
 std::string	getInput( void );

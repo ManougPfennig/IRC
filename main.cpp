@@ -9,6 +9,7 @@ const char	*cmdType[] = {
 	"PART",
 	"PRIVMSG",
 	"KICK",
+	"MODE",
 	NULL,
 };
 

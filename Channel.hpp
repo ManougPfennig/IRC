@@ -9,11 +9,17 @@
 class Channel {
 	private:
 
-		std::string			_name = "";
-		std::string			_password = "";
-		std::string			_topic = "";
-		std::vector<int>	_clients;
-		std::vector<int>	_operators;
+		std::string					_name = "";
+		std::string					_password = "";
+		std::string					_topic = "";
+		std::vector<int>			_clients;
+		std::vector<int>			_operators;
+
+		std::vector<std::string>	_invitedUsers;
+		bool						_isInviteOnly;
+
+		int							_maxUsers;
+		bool						_hasUserLimit;
 
 	public:
 

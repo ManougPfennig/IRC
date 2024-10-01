@@ -55,6 +55,14 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
 			break;
 		}
+		case 8: // MODE
+		{
+			if (!channelName.empty())
+				MODE(serv, clientFd, channelName, arg);
+			else
+				sendMsg(clientFd, "Error: no channel name provided, please try again...\n");
+			break;
+		}
 	}
 	return ;
 }
