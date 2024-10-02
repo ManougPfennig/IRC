@@ -117,22 +117,39 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 		}
 		case 3: // o (operator privilege)
 		{
+			// Checking if the specified target exists
+			if (gC(serv, arg) == -1) {
+				msg = "#" + channelName + ": '" + arg + "' user not found.\r\n";
+				sendMsg(clientFd, msg.c_str());
+				break ;
+			}
 			if (sign == '+') {
-				channel.addOperator(gC(serv, arg));;
+				channel.addOperator(gC(serv, arg));
 				msg = "#" + channelName + ": '" + arg + "' added to operator list.\r\n";
 				sendMsg(clientFd, msg.c_str());
 			}
 			else {
-				channel.setPassword("");
+				channel.removeOperator(gC(serv, arg));
 				msg = "#" + channelName + ": '" + arg + "' removed from operator list.\r\n";
 				sendMsg(clientFd, msg.c_str());
+				msg = "#" + channelName + ": you have been removed from operator list.\r\n";
+				sendMsg(gC(serv, arg), msg.c_str());
 			}
 			break ;
 		}
 		case 4: // l (number of users)
 		{
+			if (sign == '+') {
+				channel.setHasUserLimit(true);
+				msg = "#" + channelName + ": ";
+				sendMsg(clientFd, msg.c_str());
+			}
+			else {
+				channel.setHasUserLimit(false);
+				msg = "#" + channelName + ": ";
+				sendMsg(clientFd, msg.c_str());
+			}
 			break ;
-			
 		}
 	}
 }
