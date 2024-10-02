@@ -17,7 +17,7 @@ class Channel {
 
 		bool						_isInviteOnly;
 
-		int							_maxUsers;
+		unsigned int				_usersLimit;
 		bool						_hasUserLimit;
 
 		std::string					_topic = "";
@@ -39,8 +39,10 @@ class Channel {
 		std::string			getPassword( void ) const;
 		void				setIsInvitOnly( bool b );
 		bool				getIsInvitOnly( void ) const;
-		void				setMaxUsers( int max );
-		int					getMaxUsers( void ) const;
+		void				setUsersLimit( unsigned int max );
+		int					setUsersLimit( std::string max );
+		unsigned int		getUsersLimit( void ) const;
+		void				setHasUserLimit( bool b );
 		void				setHasUserLimit( bool b );
 		bool				getHasUserLimit( void ) const;
 		void				setTopic( std::string topic );

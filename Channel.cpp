@@ -4,9 +4,9 @@
 
 Channel::~Channel( void ) {}
 
-Channel::Channel( void ) : _isInviteOnly(false), _topicSettableByUsers(false), _maxUsers(0), _hasUserLimit(false) {}
+Channel::Channel( void ) : _isInviteOnly(false), _topicSettableByUsers(false), _usersLimit(0), _hasUserLimit(false) {}
 
-Channel::Channel(const std::string &name) : _name(name), _isInviteOnly(false), _topicSettableByUsers(false), _maxUsers(0), _hasUserLimit(false) {}
+Channel::Channel(const std::string &name) : _name(name), _isInviteOnly(false), _topicSettableByUsers(false), _usersLimit(0), _hasUserLimit(false) {}
 
 Channel::Channel( const Channel &sa ) {}
 
@@ -53,19 +53,43 @@ void				Channel::setIsInvitOnly( bool b ){
 	_isInviteOnly = b;
 	return ;
 }
+
 bool				Channel::getIsInvitOnly( void ) const{
 
 	return (_isInviteOnly);
 }
-void				Channel::setMaxUsers( int max ){
 
-	_maxUsers = max;
+void				Channel::setUsersLimit( unsigned int max ){
+
+	_usersLimit = max;
 	return ;
 }
-int					Channel::getMaxUsers( void ) const{
 
-	return (_maxUsers);
+int					Channel::setUsersLimit( std::string max ){
+
+	// Check if input string is not empty
+	if (max.empty())
+		return (1);
+
+	// Check if all characters are digits
+	for (int i = 0; max[i]; i++) {
+		if (isdigit(max[i]) == 0)
+			return (1);
+	}
+	// Check if value is not over unsigned int max
+	if ((unsigned int)atol(max.c_str) > UINT32_MAX)
+		return (1);
+
+	// Set user's limit new value
+	_usersLimit = (unsigned int)atol(max.c_str);
+	return (0);
 }
+
+unsigned int		Channel::getUsersLimit( void ) const{
+
+	return (_usersLimit);
+}
+
 void				Channel::setHasUserLimit( bool b ){
 
 	_hasUserLimit = b;

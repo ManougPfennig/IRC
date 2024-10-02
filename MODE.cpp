@@ -140,13 +140,17 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 		case 4: // l (number of users)
 		{
 			if (sign == '+') {
-				channel.setHasUserLimit(true);
-				msg = "#" + channelName + ": ";
+				if (channel.setUsersLimit(arg) != ERROR) {
+					channel.setHasUserLimit(true);
+					msg = "#" + channelName + ": limit on number of users set to " + channel.getUsersLimit() + "\r\n";
+				}
+				else
+					msg = "#" + channelName + ": Invalid input on max number of users, settings remain unchanged.\r\n";
 				sendMsg(clientFd, msg.c_str());
 			}
 			else {
 				channel.setHasUserLimit(false);
-				msg = "#" + channelName + ": ";
+				msg = "#" + channelName + ": removed limit on number of users.\r\n";
 				sendMsg(clientFd, msg.c_str());
 			}
 			break ;
