@@ -7,19 +7,21 @@
 # include <map>
 
 class Channel {
+
 	private:
 
 		std::string					_name = "";
 		std::string					_password = "";
-		std::string					_topic = "";
 		std::vector<int>			_clients;
 		std::vector<int>			_operators;
 
-		std::vector<std::string>	_invitedUsers;
 		bool						_isInviteOnly;
 
 		int							_maxUsers;
 		bool						_hasUserLimit;
+
+		std::string					_topic = "";
+		bool						_topicSettableByUsers;
 
 	public:
 
@@ -31,12 +33,20 @@ class Channel {
 
 		// Getters and Setters for private variable
 		std::string			getName( void ) const;
-		void				setName( std::string name);
+		void				setName( std::string name );
 		std::vector<int>	&getClientsOfChannel();
-		void				setPassword(std::string password);
-		std::string			getPassword(void) const;
-		void				setTopic(std::string topic);
-		std::string			getTopic(void) const;
+		void				setPassword( std::string password );
+		std::string			getPassword( void ) const;
+		void				setIsInvitOnly( bool b );
+		bool				getIsInvitOnly( void ) const;
+		void				setMaxUsers( int max );
+		int					getMaxUsers( void ) const;
+		void				setHasUserLimit( bool b );
+		bool				getHasUserLimit( void ) const;
+		void				setTopic( std::string topic );
+		std::string			getTopic( void ) const;
+		void				setTopicSettableByUsers( bool b );
+		bool				getTopicSettableByUsers( void );
 
 		//utils
 		void	addClientToChannel(int clientFd);

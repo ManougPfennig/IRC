@@ -7,9 +7,6 @@
 // MODE #Finnish +v Wiz            ; Command to allow WiZ to speak on
 //                                #Finnish.
 
-// MODE #Fins -s                   ; Command to remove 'secret' flag
-//                                from channel #Fins.
-
 // MODE #42 +k oulu                ; Command to set the channel key to
 //                                "oulu".
 
@@ -25,7 +22,7 @@
 bool	isArgUsable(std::string arg)
 {
 	// Checking if arg contains the minimum required amount of characters for call
-	if (arg.size() < 2)
+	if (arg.size() != 2)
 		return (false);
 
 	// Checking that the first character is a sign
@@ -60,33 +57,77 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 	// Removing the \r\n at the end of arg
 	arg = arg.substr(0, std::min(arg.find_first_of('\r'), arg.find_first_of('\n')));
 
+	// Keeping the MODE command type and it's sign (ex: +i or -k)
+	std::string type = arg.substr(0, arg.find_first_of(' '));
+	arg = arg.substr(arg.find_first_of(' '));
+
 	// Checking if the command is called correctly
-	if (isArgUsable(arg) == false) {
+	if (isArgUsable(type) == false) {
 		sendMsg(clientFd, "Error: MODE command, unvalid argument sent.\n");
 		return ;
 	}
 
 	std::string commandList = "itkol";
-	switch (commandList.find_first_of(arg[1], 0))
+	std::string	msg;
+	char		sign = arg[0];
+	switch (commandList.find_first_of(type[1], 0))
 	{
 		case 0: // i (invite only)
 		{
+			if (sign == '+') {
+				channel.setIsInvitOnly(true);
+				msg = "#" + channelName + ": set to invite only.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
+			else {
+				channel.setIsInvitOnly(false);
+				msg = "#" + channelName + ": disabled invite only.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
 			break ;
 		}
 		case 1: // t (topic restriction)
 		{
+			if (sign == '+') {
+				channel.setTopicSettableByUsers(false);
+				msg = "#" + channelName + ": topic can now only be set by operators.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
+			else {
+				channel.setTopicSettableByUsers(true);
+				msg = "#" + channelName + ": topic can now be set by anyone.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
 			break ;
 			
 		}
 		case 2: // k (password settings)
 		{
+			if (sign == '+') {
+				channel.setPassword(arg);
+				msg = "#" + channelName + ": password set successfully.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
+			else {
+				channel.setPassword("");
+				msg = "#" + channelName + ": password removed successfully.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
 			break ;
-			
 		}
 		case 3: // o (operator privilege)
 		{
+			if (sign == '+') {
+				channel.addOperator(gC(serv, arg));;
+				msg = "#" + channelName + ": '" + arg + "' added to operator list.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
+			else {
+				channel.setPassword("");
+				msg = "#" + channelName + ": '" + arg + "' removed from operator list.\r\n";
+				sendMsg(clientFd, msg.c_str());
+			}
 			break ;
-			
 		}
 		case 4: // l (number of users)
 		{

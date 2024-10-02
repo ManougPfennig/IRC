@@ -4,11 +4,12 @@
 
 Channel::~Channel( void ) {}
 
-Channel::Channel( void ) {}
+Channel::Channel( void ) : _isInviteOnly(false), _topicSettableByUsers(false), _maxUsers(0), _hasUserLimit(false) {}
 
-Channel::Channel(const std::string &name) : _name(name) {}
+Channel::Channel(const std::string &name) : _name(name), _isInviteOnly(false), _topicSettableByUsers(false), _maxUsers(0), _hasUserLimit(false) {}
 
 Channel::Channel( const Channel &sa ) {}
+
 
 // = Operator overcharge
 
@@ -16,6 +17,7 @@ Channel &Channel::operator=( const Channel &sa ) {
 
 	return (*this);
 }
+
 
 // Getters and Setters
 
@@ -46,6 +48,34 @@ std::string			Channel::getPassword(void) const {
 	return (_password);
 }
 
+void				Channel::setIsInvitOnly( bool b ){
+
+	_isInviteOnly = b;
+	return ;
+}
+bool				Channel::getIsInvitOnly( void ) const{
+
+	return (_isInviteOnly);
+}
+void				Channel::setMaxUsers( int max ){
+
+	_maxUsers = max;
+	return ;
+}
+int					Channel::getMaxUsers( void ) const{
+
+	return (_maxUsers);
+}
+void				Channel::setHasUserLimit( bool b ){
+
+	_hasUserLimit = b;
+	return ;
+}
+bool				Channel::getHasUserLimit( void ) const{
+
+	return (_hasUserLimit);
+}
+
 void				Channel::setTopic(std::string topic) {
 
 	_topic = topic;
@@ -56,6 +86,18 @@ std::string			Channel::getTopic(void) const {
 
 	return (_topic);
 }
+
+void				Channel::setTopicSettableByUsers( bool b ){
+
+	_topicSettableByUsers = b;
+	return ;
+}
+
+bool				Channel::getTopicSettableByUsers( void ){
+
+	return (_topicSettableByUsers);
+}
+
 
 
 //utils
