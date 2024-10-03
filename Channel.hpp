@@ -15,6 +15,7 @@ class Channel {
 		std::vector<int>			_clients;
 		std::vector<int>			_operators;
 
+		std::vector<std::string>	_invitedUsers;
 		bool						_isInviteOnly;
 
 		unsigned int				_usersLimit;

@@ -10,17 +10,16 @@ class Client {
 	private:
 
 		// Has Client finished registration ?
-		bool	_registered = false;
+		bool	_registered;
 		// Has Client entered the server password ?
-		bool	_passed = false;
-
-		bool	_xChat = false;
+		bool	_passed;
+		// Is Client using hexchat ?
+		bool	_xChat;
 
 		// Client information
 		std::string	_nickname = "";
 		std::string	_username = "";
 		std::string _realname = "";
-
 
 	public:
 

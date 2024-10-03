@@ -136,6 +136,7 @@ void	PART( t_server *serv, int clientFd, std::string channelName, std::string ms
 void	JOIN( t_server *serv, int clientFd, std::string channelName, std::string password );
 void	KICK( t_server *serv, int clientFd, std::string channelName, std::string arg );
 void	MODE( t_server *serv, int clientFd, std::string channelName, std::string arg );
+void	INVITE( t_server *serv, int clientFd, std::string username, std::string arg );
 
 // utils
 std::string	getInput( void );

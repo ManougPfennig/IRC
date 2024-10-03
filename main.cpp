@@ -10,6 +10,7 @@ const char	*cmdType[] = {
 	"PRIVMSG",
 	"KICK",
 	"MODE",
+	"INVITE",
 	NULL,
 };
 

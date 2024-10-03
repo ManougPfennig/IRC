@@ -4,9 +4,9 @@
 
 Client::~Client( void ) {}
 
-Client::Client( void ) {}
+Client::Client( void ) : _registered(false), _passed(false), _xChat(false) {}
 
-Client::Client( const Client &sa ) {}
+Client::Client( const Client &sa ) : _registered(false), _passed(false), _xChat(false) {}
 
 // = Operator overcharge
 

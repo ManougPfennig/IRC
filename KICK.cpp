@@ -4,8 +4,6 @@
 void	KICK(t_server *serv, int clientFd, std::string channelName, std::string arg)
 {
 	Channel		&channel = serv->channelMap[channelName];
-	std::string	target = arg.substr(0, std::min(arg.find_first_of(' '), arg.find_first_of('\r')));
-	int			targetFd = gC(serv, target);
 
 	// Checking if the specified channel exists
 	if (doesChannelExist(serv, channelName) == false) {
@@ -20,6 +18,19 @@ void	KICK(t_server *serv, int clientFd, std::string channelName, std::string arg
 		sendMsg(clientFd, msg.c_str());
 		return ;
 	}
+
+	// Storing the specifed target's name and it's associated fd, then removing it from arg
+	std::string	target;
+	int			targetFd;
+	if (contains(arg, ' ') == true) {
+		target = arg.substr(0, arg.find_first_of(' '));
+		arg = arg.erase(0, target.size() + 1);
+	}
+	else {
+		target = arg;
+		arg.clear();
+	}
+	targetFd = gC(serv, target);
 
 	// Checks if the target exists and/or is in the channel
 	if (targetFd == -1 || channel.isClientInChannel(targetFd) == false)
@@ -37,10 +48,11 @@ void	KICK(t_server *serv, int clientFd, std::string channelName, std::string arg
 		return ;
 	}
 
-	arg = arg.substr(arg.find(':'));
+	// Keeping only the reason of the kick
 	if (!arg.empty() && arg[0] == ':')
-		arg.erase(0);
-	// Kicking target from the channel and broadcasting the message in the channel
+		arg.erase(0, 1);
+
+	// Broadcasting the message in the channel kicking target from the channel
 	broadcastKick(serv, channelName, clientFd, targetFd, arg);
 	channel.removeClientFromChannel(targetFd);
 	return ;
