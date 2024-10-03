@@ -42,8 +42,8 @@ void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &chan
 
 	// Close the channel if it is now empty
 	if (channel.getClientsOfChannel().empty()) {
-		serv->channelMap.erase(channelName);
 		std::cout << "The channel '" << channelName << "' was empty so it got closed." << std::endl;
+		serv->channelMap.erase(channelName);
 	}
 	return ;
 }
