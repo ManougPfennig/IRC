@@ -4,6 +4,8 @@
 void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd) {
 
 	Client &client = gC(serv, clientFd);
+	std::vector<std::string>	emptyChannels;
+
 	for (std::map<std::string, Channel>::iterator it = serv->channelMap.begin(); it != serv->channelMap.end(); it++) {
 		//remove the client from every channels that exist because removeClientFromChannel() already check if he's in it
 		it->second.removeClientFromChannel(clientFd);
@@ -11,10 +13,13 @@ void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd) {
 		broadcastLeaving(serv, it->second.getName(), clientFd, "");
 		//remove that disconnecting client from the invitation list of that channel
 		it->second.removeFromInviteList(client.getUsername());
-		//close channel if it got emptied by that departure
+		//get the list of channels that are now empty
 		if (it->second.getClientsOfChannel().empty()) {
-			std::cout << "The channel '" << it->second.getName() << "' was empty so it got closed." << std::endl;
-			serv->channelMap.erase(it->second.getName());
+			emptyChannels.push_back(it->second.getName());
 		}
+	}
+	//close empty channels
+	for (std::vector<std::string>::iterator ite = emptyChannels.begin(); ite != emptyChannels.end(); ite++) {
+		serv->channelMap.erase(*ite);
 	}
 }
