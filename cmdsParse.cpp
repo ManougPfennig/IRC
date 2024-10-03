@@ -7,9 +7,15 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 	std::string	command = toParse.substr(0, toParse.find_first_of(' '));
 	toParse.erase(0, toParse.find_first_of(' ') + 1);
 
-	// Keeping the channel from the input string
-	std::string	channelName = toParse.substr(0, std::min(toParse.find_first_of(' '), toParse.find_first_of('\r')));
-	toParse.erase(0, toParse.find_first_of(' ') + 1);
+	// Removing any \r\n from the end of the string
+	toParse = toParse.substr(0, std::min(toParse.find_first_of('\r'), toParse.find_first_of('\n')));
+
+	// Keeping the channel from the input string and removing it from toParse
+	std::string	channelName = toParse.substr(0, toParse.find_first_of(' '));
+	if (contains(toParse, ' '))
+		toParse.erase(0, toParse.find_first_of(' ') + 1);
+	else
+		toParse.clear();
 
 	// Keeping the argument from the input string
 	std::string	arg = toParse;

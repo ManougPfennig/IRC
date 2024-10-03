@@ -77,11 +77,11 @@ int					Channel::setUsersLimit( std::string max ){
 			return (1);
 	}
 	// Check if value is not over unsigned int max
-	if ((unsigned int)atol(max.c_str) > UINT32_MAX)
+	if ((unsigned int)atol(max.c_str()) > UINT32_MAX)
 		return (1);
 
 	// Set user's limit new value
-	_usersLimit = (unsigned int)atol(max.c_str);
+	_usersLimit = (unsigned int)atol(max.c_str());
 	return (0);
 }
 

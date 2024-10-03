@@ -200,3 +200,13 @@ bool	doesChannelExist(t_server *serv, std::string channelName)
 		return (false);
 	return (true);
 }
+
+// Checks whether or not if the string 'str' contains a char of type 'c'.
+bool	contains(std::string str, char c)
+{
+	for (int i = 0; str[i]; i++) {
+		if (str[i] == c)
+			return (true);
+	}
+	return (false);
+}

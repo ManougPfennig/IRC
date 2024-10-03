@@ -54,12 +54,12 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 		return ;
 	}
 
-	// Removing the \r\n at the end of arg
-	arg = arg.substr(0, std::min(arg.find_first_of('\r'), arg.find_first_of('\n')));
-
 	// Keeping the MODE command type and it's sign (ex: +i or -k)
-	std::string type = arg.substr(0, arg.find_first_of(' '));
-	arg = arg.substr(arg.find_first_of(' '));
+	std::string type = arg.substr(0, arg.find_first_of(' ', 0));
+	if (!arg.empty())
+		arg = arg.erase(0, arg.find_first_of(' '));
+
+	std::cout << "type?:-" << type << "-" << std::endl;
 
 	// Checking if the command is called correctly
 	if (isArgUsable(type) == false) {
@@ -70,6 +70,7 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 	std::string commandList = "itkol";
 	std::string	msg;
 	char		sign = arg[0];
+	std::cout << "channelName:-" << channelName << "-\narg:-" << arg << "-\ntype:-" << type << "-" << std::endl; 
 	switch (commandList.find_first_of(type[1], 0))
 	{
 		case 0: // i (invite only)
@@ -142,7 +143,7 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 			if (sign == '+') {
 				if (channel.setUsersLimit(arg) != ERROR) {
 					channel.setHasUserLimit(true);
-					msg = "#" + channelName + ": limit on number of users set to " + channel.getUsersLimit() + "\r\n";
+					msg = "#" + channelName + ": limit on number of users set to " + std::to_string(channel.getUsersLimit()) + "\r\n";
 				}
 				else
 					msg = "#" + channelName + ": Invalid input on max number of users, settings remain unchanged.\r\n";

@@ -43,7 +43,6 @@ class Channel {
 		int					setUsersLimit( std::string max );
 		unsigned int		getUsersLimit( void ) const;
 		void				setHasUserLimit( bool b );
-		void				setHasUserLimit( bool b );
 		bool				getHasUserLimit( void ) const;
 		void				setTopic( std::string topic );
 		std::string			getTopic( void ) const;
