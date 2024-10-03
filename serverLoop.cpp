@@ -82,6 +82,7 @@ void	serverLoop( t_server *serv )
 					inet_ntop(AF_INET6, &(serv->address6.sin6_addr), ip_str, INET6_ADDRSTRLEN);
 					std::cout << "Déconnexion de " << ip_str << ":" << ntohs(serv->address6.sin6_port) << std::endl;
 					clientsToRemove.push_back(it->first);
+					cleanChannelsFromDisconnectingClients(serv, it->first);
 				}
 				else
 				{

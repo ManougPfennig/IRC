@@ -126,6 +126,7 @@ void	disconnectClientFromChannel(t_server *serv, int clientFd, std::string &chan
 void	broadcastLeaving(t_server *serv, std::string channelName, int senderFd, std::string msg);
 void	broadcastKick(t_server *serv, std::string channelName, int senderFd, int targetFd, std::string msg);
 void	broadcastJoining(t_server *serv, std::string channelName, int senderFd);
+void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd);
 
 // Commands
 void	PASS( t_server *serv, int key, std::string arg );
