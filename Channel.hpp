@@ -24,6 +24,7 @@ class Channel {
 		std::string					_topic = "";
 		bool						_topicSettableByUsers;
 
+
 	public:
 
 		~Channel();
@@ -33,22 +34,32 @@ class Channel {
 		Channel &operator=(const Channel &sa);
 
 		// Getters and Setters for private variable
-		std::string			getName( void ) const;
-		void				setName( std::string name );
-		std::vector<int>	&getClientsOfChannel();
-		void				setPassword( std::string password );
-		std::string			getPassword( void ) const;
-		void				setIsInvitOnly( bool b );
-		bool				getIsInvitOnly( void ) const;
-		void				setUsersLimit( unsigned int max );
-		int					setUsersLimit( std::string max );
-		unsigned int		getUsersLimit( void ) const;
-		void				setHasUserLimit( bool b );
-		bool				getHasUserLimit( void ) const;
-		void				setTopic( std::string topic );
-		std::string			getTopic( void ) const;
-		void				setTopicSettableByUsers( bool b );
-		bool				getTopicSettableByUsers( void );
+		std::string					getName( void ) const;
+		void						setName( std::string name );
+
+		std::vector<int>			&getClientsOfChannel();
+
+		void						setPassword( std::string password );
+		std::string					getPassword( void ) const;
+
+		void						setInvitedUsers( std::vector<std::string> v );
+		std::vector<std::string>	getInvitedUsers( void ) const ;
+
+		void						setIsInvitOnly( bool b );
+		bool						getIsInvitOnly( void ) const;
+
+		void						setUsersLimit( unsigned int max );
+		int							setUsersLimit( std::string max );
+		unsigned int				getUsersLimit( void ) const;
+
+		void						setHasUserLimit( bool b );
+		bool						getHasUserLimit( void ) const;
+
+		void						setTopic( std::string topic );
+		std::string					getTopic( void ) const;
+
+		void						setTopicSettableByUsers( bool b );
+		bool						getTopicSettableByUsers( void );
 
 		//utils
 		void	addClientToChannel(int clientFd);
@@ -57,6 +68,9 @@ class Channel {
 		void	addOperator(int clientFd);
 		void	removeOperator(int clientFd);
 		bool	isOperator(int clientFd) const;
+		void	addToInviteList( std::string username );
+		void	removeFromInviteList( std::string username );
+		bool	isInInviteList( std::string username ) const ;
 
 };
 

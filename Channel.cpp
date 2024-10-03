@@ -48,6 +48,17 @@ std::string			Channel::getPassword(void) const {
 	return (_password);
 }
 
+void						Channel::setInvitedUsers( std::vector<std::string> v ) {
+
+	_invitedUsers = v;
+	return ;
+}
+
+std::vector<std::string>	Channel::getInvitedUsers( void ) const {
+
+	return (_invitedUsers);
+}
+
 void				Channel::setIsInvitOnly( bool b ){
 
 	_isInviteOnly = b;
@@ -188,6 +199,40 @@ bool	Channel::isOperator(int clientFd) const {
 	for (std::vector<int>::const_iterator it = _operators.begin(); it != _operators.end(); it++)
 	{
 		if (*it == clientFd)
+			return (true);
+	}
+	return (false);
+}
+
+// Adds a username to the list of invited users
+void	Channel::addToInviteList( std::string username ) {
+
+	_invitedUsers.push_back(username);
+	return ;
+}
+
+void	Channel::removeFromInviteList( std::string username ) {
+
+	std::vector<std::string>::const_iterator it;
+	for (it = _invitedUsers.begin(); it != _invitedUsers.end(); it++) {
+
+		if (*it == username)
+		{
+			_invitedUsers.erase(it);
+			return ;
+		}
+	}
+	return ;
+}
+
+// Checks whether or not a user is in the list of invited users
+bool	Channel::isInInviteList( std::string username ) const {
+
+	std::vector<std::string>::const_iterator it;
+
+	for (it = _invitedUsers.begin(); it != _invitedUsers.end(); it++) {
+
+		if (*it == username)
 			return (true);
 	}
 	return (false);

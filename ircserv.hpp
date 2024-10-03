@@ -150,6 +150,8 @@ int			whichCommand(std::string cmd);
 bool		doesChannelExist(t_server *serv, std::string channelName);
 std::string formatMsg(t_server *serv, bool fromServer, int code, int clientFd, std::string command, std::string channelName, std::string message);
 bool		contains(std::string str, char c);
+bool		isUsernameTaken(t_server *serv, std::string name);
+
 
 // Messages Printing
 
