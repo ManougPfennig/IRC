@@ -82,7 +82,6 @@ void	serverLoop( t_server *serv )
 					inet_ntop(AF_INET6, &(serv->address6.sin6_addr), ip_str, INET6_ADDRSTRLEN);
 					std::cout << "Déconnexion de " << ip_str << ":" << ntohs(serv->address6.sin6_port) << std::endl;
 					clientsToRemove.push_back(it->first);
-					cleanChannelsFromDisconnectingClients(serv, it->first);
 				}
 				else
 				{
@@ -103,8 +102,9 @@ void	serverLoop( t_server *serv )
 		}
 
 		// Removing clients that has disconnected and closing their designated Fds
-		for (std::vector<int>::const_iterator rm = clientsToRemove.begin(); rm != clientsToRemove.end(); rm++)
+		for (std::vector<int>::iterator rm = clientsToRemove.begin(); rm != clientsToRemove.end(); rm++)
 		{
+			cleanChannelsFromDisconnectingClients(serv, *rm);
 			serv->clientMap.erase(*rm);
 			close(*rm);
 		}

@@ -13,8 +13,8 @@ void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd) {
 		it->second.removeFromInviteList(client.getUsername());
 		//close channel if it got emptied by that departure
 		if (it->second.getClientsOfChannel().empty()) {
-		serv->channelMap.erase(it->second.getName());
-		std::cout << "The channel '" << it->second.getName() << "' was empty so it got closed." << std::endl;
-	}
+			serv->channelMap.erase(it->second.getName());
+			std::cout << "The channel '" << it->second.getName() << "' was empty so it got closed." << std::endl;
+		}
 	}
 }
