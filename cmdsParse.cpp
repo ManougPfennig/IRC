@@ -22,15 +22,15 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 	if (arg[0] == ':')
 		arg.erase(0, 1);
 
-	// If channelName starts with '#', removing it for format
-	if (!channelName.empty() && channelName[0] == '#')
-		channelName.erase(0, 1);
-
 	// Switching on the specified command
 	switch (whichCommand(command))
 	{
 		case 4: // JOIN
 		{
+			// If channelName starts with '#', removing it for format
+			if (!channelName.empty() && channelName[0] == '#')
+				channelName.erase(0, 1);
+
 			if (!channelName.empty())
 				JOIN(serv, clientFd, channelName, arg);
 			else
@@ -39,6 +39,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 5: // PART
 		{
+			// If channelName starts with '#', removing it for format
+			if (!channelName.empty() && channelName[0] == '#')
+				channelName.erase(0, 1);
+
 			if (!channelName.empty())
 				PART(serv, clientFd, channelName, arg);
 			else
@@ -47,14 +51,23 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 6: // PRIVMSG
 		{
-			if (isChannelNameAChannel(serv, channelName))
-				broadcastToChannel(serv, channelName, clientFd, arg);
-			else
+			if (channelName[0] == '#') { // Interpret as message to channel
+				channelName.erase(0, 1);
+				if (!channelName.empty())
+					broadcastToChannel(serv, channelName, clientFd, arg);
+				else
+					sendMsg(clientFd, "Error: no channel name provided.\r\n");
+			}
+			else // Interpret as message to user
 				sendPrivateMessage(serv, channelName, clientFd, arg);
 			break ;
 		}
 		case 7: // KICK
 		{
+			// If channelName starts with '#', removing it for format
+			if (!channelName.empty() && channelName[0] == '#')
+				channelName.erase(0, 1);
+
 			if (!channelName.empty())
 				KICK(serv, clientFd, channelName, arg);
 			else
@@ -63,6 +76,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 8: // MODE
 		{
+			// If channelName starts with '#', removing it for format
+			if (!channelName.empty() && channelName[0] == '#')
+				channelName.erase(0, 1);
+
 			if (!channelName.empty())
 				MODE(serv, clientFd, channelName, arg);
 			else
