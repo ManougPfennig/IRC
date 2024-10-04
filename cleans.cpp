@@ -1,25 +1,34 @@
 #include "ircserv.hpp"
 
-//remove the client from all the channels he were still in when disconnecting
+// Remove the client from all the channels he was still in when disconnecting
 void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd) {
 
-	Client &client = gC(serv, clientFd);
+	Client						&client = gC(serv, clientFd);
 	std::vector<std::string>	emptyChannels;
 
+	// Iterating on every channels of the server
 	for (std::map<std::string, Channel>::iterator it = serv->channelMap.begin(); it != serv->channelMap.end(); it++) {
-		//remove the client from every channels that exist because removeClientFromChannel() already check if he's in it
+
+		// Client is removed from the channel's client list (removeClientFromChannel will check if he is connected on said channel)
 		it->second.removeClientFromChannel(clientFd);
-		//departure message to other users in the channel
-		broadcastLeaving(serv, it->second.getName(), clientFd, "");
-		//remove that disconnecting client from the invitation list of that channel
+
+		// Send a departure message to other users in the channel
+		broadcastLeaving(serv, it->first, clientFd, "Disconnected");
+
+		// Client is removed from the channel's invite list
 		it->second.removeFromInviteList(client.getUsername());
-		//get the list of channels that are now empty
+
+		// Keep a list of channels that are now empty
 		if (it->second.getClientsOfChannel().empty()) {
-			emptyChannels.push_back(it->second.getName());
+			emptyChannels.push_back(it->first);
 		}
 	}
-	//close empty channels
-	for (std::vector<std::string>::iterator ite = emptyChannels.begin(); ite != emptyChannels.end(); ite++) {
-		serv->channelMap.erase(*ite);
+
+	// Closing empty channels
+	for (std::vector<std::string>::iterator it = emptyChannels.begin(); it != emptyChannels.end(); it++) {
+		std::cout << "erased '" << *it << "' because it is now empty" << std::endl;
+		serv->channelMap.erase(*it);
 	}
+
+	return ;
 }

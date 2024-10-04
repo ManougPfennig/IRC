@@ -81,6 +81,8 @@ void	registerNewClient(t_server *serv, int key)
 			}
 		}
 	}
+	freeTab(toParse);
+
 	// When the Client has entered all necessary fields, registration is finished.
 	if (CheckForMissingAuthElements(serv, key) == 0)
 	{
