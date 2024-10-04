@@ -3,7 +3,7 @@ SRCS =	main.cpp checkArgs.cpp utils.cpp Client.cpp ServerException.cpp \
 		openServer.cpp serverLoop.cpp auth.cpp \
 		USER.cpp NICK.cpp PASS.cpp cmdsParse.cpp Channel.cpp \
 		PART.cpp JOIN.cpp broadcasts.cpp KICK.cpp MODE.cpp INVITE.cpp \
-		cleans.cpp PRIVMSG.cpp
+		cleans.cpp PRIVMSG.cpp TOPIC.cpp
 FLAGS = -std=c++98 -pedantic -Wall -Wextra -Werror -g3 #-fsanitize=address
 OBJS = ${SRCS:.cpp=.o}
 

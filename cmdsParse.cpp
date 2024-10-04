@@ -95,6 +95,19 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 				sendMsg(clientFd, "Error: no username provided.\r\n");
 			break;
 		}
+		case 10: //TOPIC
+		{
+			// If channelName starts with '#', removing it for format
+			if (!channelName.empty() && channelName[0] == '#')
+				channelName.erase(0, 1);
+
+			//check if there's still something in channelName after removing '#'
+			if (!channelName.empty())
+				TOPIC(serv, clientFd, channelName, arg);
+			else
+				sendMsg(clientFd, "Error: no channel name provided.\r\n");
+			break;
+		}
 	}
 	return ;
 }
