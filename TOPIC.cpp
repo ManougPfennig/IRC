@@ -18,7 +18,7 @@ void	TOPIC(t_server *serv, int clientFd, std::string channelName, std::string ar
 
 	//if ther's no arguments, just display the channel's topic to the client in the channel
 	if (arg.empty()) {
-		std::string fullmsg = ":channelTopic!channelTopic@ircserv PRIVMSG #" + channelName + " :" + serv->channelMap.find(channelName)->second.getTopic() + ".\r\n";
+		std::string fullmsg = ":channelTopic!channelTopic@ircserv PRIVMSG #" + channelName + " :" + serv->channelMap.find(channelName)->second.getTopic() + "\r\n";
 		sendMsg(clientFd, fullmsg.c_str());
 	}
 	else {
