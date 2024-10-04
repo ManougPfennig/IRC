@@ -29,6 +29,7 @@ class Client {
 		Client &operator=(const Client &sa);
 
 		// Getters and Setters for private variable
+
 		bool		getRegistered( void ) const;
 		void		SetRegistered( bool registered );
 

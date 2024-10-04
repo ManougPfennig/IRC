@@ -1,18 +1,5 @@
 #include "ircserv.hpp"
 
-
-// MODE #Finnish +o Kilroy         ; Command to give 'chanop' privileges
-//                                to Kilroy on channel #Finnish.
-
-// MODE #Finnish +v Wiz            ; Command to allow WiZ to speak on
-//                                #Finnish.
-
-// MODE #42 +k oulu                ; Command to set the channel key to
-//                                "oulu".
-
-// MODE #42 -k oulu                ; Command to remove the "oulu"
-//                                channel key on channel "#42".
-
 // — i : Définir/supprimer le canal sur invitation uniquement
 // — t : Définir/supprimer les restrictions de la commande TOPIC pour les opérateurs de canaux
 // — k : Définir/supprimer la clé du canal (mot de passe)
@@ -61,8 +48,6 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 	if (!arg.empty())
 		arg = arg.erase(0, arg.find_first_of(' ') + 1);
 
-	std::cout << "type?:-" << type << "-" << std::endl;
-
 	// Checking if the command is called correctly
 	if (isArgUsable(type) == false) {
 		sendMsg(clientFd, "Error: MODE command, unvalid argument sent.\n");
@@ -72,6 +57,7 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 	std::string commandList = "itkol";
 	std::string	msg;
 	char		sign = type[0];
+
 	// Looping on all character types sent and applying their logic accordingly
 	for (int i = 1; type[i]; i++) {
 
@@ -81,12 +67,12 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 			case 0: // i (invite only)
 			{
 				if (sign == '+') {
-					channel.setIsInvitOnly(true);
+					channel.setIsInviteOnly(true);
 					msg = "#" + channelName + ": set to invite only.\r\n";
 					sendMsg(clientFd, msg.c_str());
 				}
 				else {
-					channel.setIsInvitOnly(false);
+					channel.setIsInviteOnly(false);
 					msg = "#" + channelName + ": disabled invite only.\r\n";
 					sendMsg(clientFd, msg.c_str());
 				}
@@ -163,4 +149,5 @@ void	MODE(t_server *serv, int clientFd, std::string channelName, std::string arg
 			}
 		}
 	}
+	return ;
 }

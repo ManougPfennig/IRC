@@ -26,7 +26,6 @@ void	cleanChannelsFromDisconnectingClients(t_server *serv, int clientFd) {
 
 	// Closing empty channels
 	for (std::vector<std::string>::iterator it = emptyChannels.begin(); it != emptyChannels.end(); it++) {
-		std::cout << "erased '" << *it << "' because it is now empty" << std::endl;
 		serv->channelMap.erase(*it);
 	}
 

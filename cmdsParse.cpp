@@ -47,7 +47,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 6: // PRIVMSG
 		{
-			broadcastToChannel(serv, channelName, clientFd, arg);
+			if (isChannelNameAChannel(serv, channelName))
+				broadcastToChannel(serv, channelName, clientFd, arg);
+			else
+				sendPrivateMessage(serv, channelName, clientFd, arg);
 			break ;
 		}
 		case 7: // KICK

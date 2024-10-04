@@ -30,7 +30,7 @@ void	serverLoop( t_server *serv )
 		if (serv->activity = select(serv->nfds + 1, &serv->readfds, &serv->writefds, &serv->exceptfds, NULL) < 0)
 			throw (ServerException::SelectFailed());
 		else
-			std::cout << "Activity detected." << std::endl;
+			std::cout << "\nActivity detected." << std::endl;
 
 		// Checking if activity is a connexion request from a new client
 		if (FD_ISSET(serv->serverSocket, &serv->readfds))
@@ -104,7 +104,9 @@ void	serverLoop( t_server *serv )
 		// Removing clients that has disconnected and closing their designated Fds
 		for (std::vector<int>::iterator rm = clientsToRemove.begin(); rm != clientsToRemove.end(); rm++)
 		{
-			cleanChannelsFromDisconnectingClients(serv, *rm);
+			if (gC(serv, *rm).getRegistered() == true)
+				cleanChannelsFromDisconnectingClients(serv, *rm);
+
 			serv->clientMap.erase(*rm);
 			close(*rm);
 		}

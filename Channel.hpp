@@ -34,6 +34,7 @@ class Channel {
 		Channel &operator=(const Channel &sa);
 
 		// Getters and Setters for private variable
+
 		std::string					getName( void ) const;
 		void						setName( std::string name );
 
@@ -45,8 +46,8 @@ class Channel {
 		void						setInvitedUsers( std::vector<std::string> v );
 		std::vector<std::string>	getInvitedUsers( void ) const ;
 
-		void						setIsInvitOnly( bool b );
-		bool						getIsInvitOnly( void ) const;
+		void						setIsInviteOnly( bool b );
+		bool						getIsInviteOnly( void ) const;
 
 		void						setUsersLimit( unsigned int max );
 		int							setUsersLimit( std::string max );

@@ -59,13 +59,13 @@ std::vector<std::string>	Channel::getInvitedUsers( void ) const {
 	return (_invitedUsers);
 }
 
-void				Channel::setIsInvitOnly( bool b ){
+void				Channel::setIsInviteOnly( bool b ){
 
 	_isInviteOnly = b;
 	return ;
 }
 
-bool				Channel::getIsInvitOnly( void ) const{
+bool				Channel::getIsInviteOnly( void ) const{
 
 	return (_isInviteOnly);
 }
@@ -188,7 +188,7 @@ void	Channel::removeOperator(int clientFd) {
 		if (*it == clientFd)
 		{
 			_operators.erase(it);
-			return ;
+			break ;
 		}
 	}
 	return ;
@@ -220,7 +220,7 @@ void	Channel::removeFromInviteList( std::string username ) {
 		if (*it == username)
 		{
 			_invitedUsers.erase(it);
-			return ;
+			break ;
 		}
 	}
 	return ;
