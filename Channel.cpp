@@ -144,6 +144,7 @@ void	Channel::addClientToChannel(int clientFd) {
 	return ;
 }
 
+// Removes a client Fd from the list of users
 void	Channel::removeClientFromChannel(int clientFd) {
 
 	// remove from _clients
@@ -164,6 +165,7 @@ void	Channel::removeClientFromChannel(int clientFd) {
 	return ;
 }
 
+// Checks if the specified client is connected in this channel
 bool	Channel::isClientInChannel(int clientFd) {
 
 	for (std::vector<int>::iterator it = _clients.begin(); it != _clients.end(); it++){
@@ -213,6 +215,7 @@ void	Channel::addToInviteList( std::string username ) {
 	return ;
 }
 
+// Removes a username to the list of invited users
 void	Channel::removeFromInviteList( std::string username ) {
 
 	std::vector<std::string>::const_iterator it;
