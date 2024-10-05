@@ -43,14 +43,13 @@ int	CheckForMissingAuthElements(t_server *serv, int key)
 	return (missingElem);
 }
 
-void	registerNewClient(t_server *serv, int key)
+void	registerNewClient(t_server *serv, int key, std::string input)
 {
-
 	char		**toParse = NULL;
 	std::string	cmd;
 
 	// Splitting the input into a list of commands
-	toParse = ft_split(serv->buffer, "\r\n");
+	toParse = ft_split(input.c_str(), "\r\n");
 
 	// Looping through the list of commands to interpret
 	for (int i = 0; toParse && toParse[i]; i++)

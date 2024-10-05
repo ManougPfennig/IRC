@@ -20,8 +20,8 @@ void	sendPrivateMessage(t_server *serv, std::string receiverName, int clientFd, 
 	// Store the receiverFd
 	int	receiverFd = gC(serv, receiverName);
 	
-	// Check if that user exists
-	if (receiverFd == -1) {
+	// Check if that user exists and is registered
+	if (receiverFd == -1 || gC(serv, receiverFd).getRegistered() == false) {
 		sendMsg(clientFd, "Error: User not found.\n");
 		return ;
 	}

@@ -21,6 +21,9 @@ class Client {
 		std::string	_username = "";
 		std::string _realname = "";
 
+		// Unfinished command buffer
+		std::string _buffer = "";
+
 	public:
 
 		~Client();
@@ -46,7 +49,12 @@ class Client {
 		void		setRealname( std::string realname);
 
 		void		setQuit( bool b );
-		bool		getQuit( void ) const ;
+		bool		getQuit( void ) const;
+
+		void		setBuffer( std::string buf );
+		std::string	getBuffer( void ) const;
+		void		addToBuffer( std::string str );
+		void		clearBuffer( void );
 
 };
 

@@ -2,7 +2,7 @@
 
 void	serverLoop( t_server *serv )
 {
-	std::map<int, Client>::const_iterator	it;
+	std::map<int, Client>::iterator	it;
 	std::vector<int>						clientsToRemove;
 
 	while (1)
@@ -88,13 +88,21 @@ void	serverLoop( t_server *serv )
 					// If read() returns a value higher than 0, the message sent by the client will be interpreted
 					serv->buffer[serv->valueread] = '\0';
 					std::cout << serv->buffer;
-					if (it->second.getQuit() == false)
+					if (contains(serv->buffer, '\n'))
 					{
-						if (it->second.getRegistered() == false)
-							registerNewClient(serv, it->first);
-						else
-							cmdsParse(serv, it->first, std::string(serv->buffer));
+						// Setting the command as the client's buffer + the rest of the command sent
+						std::string	input = it->second.getBuffer() + serv->buffer;
+						it->second.clearBuffer();
+						if (it->second.getQuit() == false)
+						{
+							if (it->second.getRegistered() == false)
+								registerNewClient(serv, it->first, input);
+							else
+								cmdsParse(serv, it->first, input);
+						}
 					}
+					else // If Ctrl+D is used to send part of a command, it is added to the client's buffer
+						it->second.addToBuffer(serv->buffer);
 				}
 			}
 			if (FD_ISSET(it->first, &serv->writefds))

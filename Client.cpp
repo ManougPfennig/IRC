@@ -82,3 +82,26 @@ bool	Client::getQuit( void ) const {
 
 	return (_quit);
 }
+
+void		Client::setBuffer( std::string buf ) {
+
+	_buffer = buf;
+	return ;
+}
+
+std::string	Client::getBuffer( void ) const {
+
+	return (_buffer);
+}
+
+void		Client::addToBuffer( std::string str ) {
+
+	_buffer += str;
+	return ;
+}
+
+void		Client::clearBuffer( void ) {
+
+	_buffer.clear();
+	return ;
+}

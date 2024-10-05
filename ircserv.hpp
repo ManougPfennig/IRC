@@ -118,7 +118,7 @@ void	openServer( t_server *serv, char *port, char *password );
 void	serverLoop( t_server *serv );
 void	messageParsing( t_server *serv );
 void	clientRegistration( t_server *serv, int clientFd );
-void	registerNewClient(t_server *serv, int);
+void	registerNewClient(t_server *serv, int key, std::string input);
 void	sendMsg( int fd, const char *str );
 void	cmdsParse(t_server *serv, int clientFd, std::string toParse);
 void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, std::string msg);
