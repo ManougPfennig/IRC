@@ -27,8 +27,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 	{
 		case 4: // JOIN
 		{
-			// If channelName starts with '#', removing it for format
-			if (!channelName.empty() && channelName[0] == '#')
+			// Checking if the channel name is formatted correctly
+			if (channelName.empty() || channelName[0] != '#')
+				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+			else
 				channelName.erase(0, 1);
 
 			if (!channelName.empty())
@@ -39,8 +41,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 5: // PART
 		{
-			// If channelName starts with '#', removing it for format
-			if (!channelName.empty() && channelName[0] == '#')
+			// Checking if the channel name is formatted correctly
+			if (channelName.empty() || channelName[0] != '#')
+				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+			else
 				channelName.erase(0, 1);
 
 			if (!channelName.empty())
@@ -64,8 +68,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 7: // KICK
 		{
-			// If channelName starts with '#', removing it for format
-			if (!channelName.empty() && channelName[0] == '#')
+			// Checking if the channel name is formatted correctly
+			if (channelName.empty() || channelName[0] != '#')
+				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+			else
 				channelName.erase(0, 1);
 
 			if (!channelName.empty())
@@ -76,8 +82,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 8: // MODE
 		{
-			// If channelName starts with '#', removing it for format
-			if (!channelName.empty() && channelName[0] == '#')
+			// Checking if the channel name is formatted correctly
+			if (channelName.empty() || channelName[0] != '#')
+				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+			else
 				channelName.erase(0, 1);
 
 			if (!channelName.empty())
@@ -97,8 +105,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		}
 		case 10: //TOPIC
 		{
-			// If channelName starts with '#', removing it for format
-			if (!channelName.empty() && channelName[0] == '#')
+			// Checking if the channel name is formatted correctly
+			if (channelName.empty() || channelName[0] != '#')
+				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+			else
 				channelName.erase(0, 1);
 
 			//check if there's still something in channelName after removing '#'

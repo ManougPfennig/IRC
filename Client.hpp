@@ -13,9 +13,7 @@ class Client {
 		bool	_registered;
 		// Has Client entered the server password ?
 		bool	_passed;
-		// Is Client using hexchat ?
-		bool	_xChat;
-
+		// Is the client disconnecting ?
 		bool	_quit;
 
 		// Client information
