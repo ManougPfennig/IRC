@@ -135,6 +135,7 @@ bool				Channel::getTopicSettableByUsers( void ){
 
 
 
+
 //utils
 
 void	Channel::addClientToChannel(int clientFd) {

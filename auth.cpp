@@ -74,6 +74,11 @@ void	registerNewClient(t_server *serv, int key)
 				USER(serv, key, cmd.substr(cmd.find_first_of(' ') + 1));
 				break;
 			}
+			case 11: // QUIT
+			{
+				gC(serv, key).setQuit(true);
+				break ;
+			}
 			case -1:
 			{
 				sendMsg(key, "Invalid command sent.\n");

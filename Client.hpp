@@ -16,6 +16,8 @@ class Client {
 		// Is Client using hexchat ?
 		bool	_xChat;
 
+		bool	_quit;
+
 		// Client information
 		std::string	_nickname = "";
 		std::string	_username = "";
@@ -44,6 +46,9 @@ class Client {
 
 		std::string	getRealname( void ) const;
 		void		setRealname( std::string realname);
+
+		void		setQuit( bool b );
+		bool		getQuit( void ) const ;
 
 };
 

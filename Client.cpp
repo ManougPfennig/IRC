@@ -4,9 +4,9 @@
 
 Client::~Client( void ) {}
 
-Client::Client( void ) : _registered(false), _passed(false), _xChat(false) {}
+Client::Client( void ) : _registered(false), _passed(false), _xChat(false), _quit(false) {}
 
-Client::Client( const Client &sa ) : _registered(false), _passed(false), _xChat(false) {}
+Client::Client( const Client &sa ) : _registered(false), _passed(false), _xChat(false), _quit(false) {}
 
 // = Operator overcharge
 
@@ -70,4 +70,15 @@ void		Client::setRealname( std::string realname){
 
 	_realname = realname;
 	return ;
+}
+
+void	Client::setQuit( bool b ) {
+
+	_quit = b;
+	return ;
+}
+
+bool	Client::getQuit( void ) const {
+
+	return (_quit);
 }

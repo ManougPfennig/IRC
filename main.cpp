@@ -12,6 +12,7 @@ const char	*cmdType[] = {
 	"MODE",
 	"INVITE",
 	"TOPIC",
+	"QUIT",
 	NULL,
 };
 

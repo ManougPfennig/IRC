@@ -108,6 +108,11 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 				sendMsg(clientFd, "Error: no channel name provided.\r\n");
 			break;
 		}
+		case 11: // QUIT
+		{
+			gC(serv, clientFd).setQuit(true);
+			break ;
+		}
 	}
 	return ;
 }

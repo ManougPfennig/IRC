@@ -62,6 +62,7 @@ class Channel {
 		void						setTopicSettableByUsers( bool b );
 		bool						getTopicSettableByUsers( void );
 
+
 		//utils
 		void	addClientToChannel(int clientFd);
 		void	removeClientFromChannel(int clientFd);
