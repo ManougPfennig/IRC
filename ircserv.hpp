@@ -156,6 +156,8 @@ bool		isUsernameTaken(t_server *serv, std::string name);
 int			isChannelNameAChannel(t_server *serv, std::string channelName);
 void		sendPrivateMessage(t_server *serv, std::string channelName, int clientFd, std::string arg);
 
+// Bot
+void	ask8ball(t_server *serv, std::string channelName);
 
 // Messages Printing
 

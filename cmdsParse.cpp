@@ -28,8 +28,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 4: // JOIN
 		{
 			// Checking if the channel name is formatted correctly
-			if (channelName.empty() || channelName[0] != '#')
+			if (channelName.empty() || channelName[0] != '#') {
 				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+				break ;
+			}
 			else
 				channelName.erase(0, 1);
 
@@ -42,8 +44,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 5: // PART
 		{
 			// Checking if the channel name is formatted correctly
-			if (channelName.empty() || channelName[0] != '#')
+			if (channelName.empty() || channelName[0] != '#') {
 				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+				break ;
+			}
 			else
 				channelName.erase(0, 1);
 
@@ -69,8 +73,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 7: // KICK
 		{
 			// Checking if the channel name is formatted correctly
-			if (channelName.empty() || channelName[0] != '#')
+			if (channelName.empty() || channelName[0] != '#') {
 				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+				break ;
+			}
 			else
 				channelName.erase(0, 1);
 
@@ -83,8 +89,10 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		case 8: // MODE
 		{
 			// Checking if the channel name is formatted correctly
-			if (channelName.empty() || channelName[0] != '#')
+			if (channelName.empty() || channelName[0] != '#') {
 				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+				break ;
+			}
 			else
 				channelName.erase(0, 1);
 
@@ -99,15 +107,19 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 			// Invite's format starts with the username then the channel, unlike EVERY other command
 			if (!channelName.empty()) // channelName is actually, in this case, the username
 				INVITE(serv, clientFd, channelName, arg);
-			else
+			else {
 				sendMsg(clientFd, "Error: no username provided.\r\n");
+				break ;
+			}
 			break;
 		}
 		case 10: //TOPIC
 		{
 			// Checking if the channel name is formatted correctly
-			if (channelName.empty() || channelName[0] != '#')
+			if (channelName.empty() || channelName[0] != '#') {
 				sendMsg(clientFd, "Error: invalid channel name provided.\r\n");
+				break ;
+			}
 			else
 				channelName.erase(0, 1);
 
@@ -122,6 +134,11 @@ void	cmdsParse(t_server *serv, int clientFd, std::string toParse) {
 		{
 			gC(serv, clientFd).setQuit(true);
 			break ;
+		}
+		case -1:
+		{
+			sendMsg(clientFd, "Invalid command sent.\n");
+			break;
 		}
 	}
 	return ;

@@ -21,25 +21,24 @@ int	CheckForMissingAuthElements(t_server *serv, int key)
 	// Checks if the client connected using the right password, or send a message
 	if (serv->clientMap.find(key)->second.getPassed() == false)
 	{
-		sendMsg(key, "Send password using 'PASS <password>' :\n");
+		sendMsg(key, "Send password using 'PASS <password>' :\r\n");
 		missingElem++;
 	}
-	else
+
+	// Checks if the client set a nickname, or send a message
+	if (serv->clientMap.find(key)->second.getNickname().length() == 0)
 	{
-		// Checks if the client set a nickname, or send a message
-		if (serv->clientMap.find(key)->second.getNickname().length() == 0)
-		{
-			sendMsg(key, "Set nickname using 'NICK <nickname>' :\n");
-			missingElem++;
-		}
-		
-		// Checks if the client set a username, or send a message
-		if (serv->clientMap.find(key)->second.getUsername().length() == 0)
-		{
-			sendMsg(key, "Set username using 'USER <username>' :\n");
-			missingElem++;
-		}
+		sendMsg(key, "Set nickname using 'NICK <nickname>' :\r\n");
+		missingElem++;
 	}
+		
+	// Checks if the client set a username, or send a message
+	if (serv->clientMap.find(key)->second.getUsername().length() == 0)
+	{
+		sendMsg(key, "Set username using 'USER <username>' :\r\n");
+		missingElem++;
+	}
+
 	return (missingElem);
 }
 
@@ -80,7 +79,7 @@ void	registerNewClient(t_server *serv, int key, std::string input)
 			}
 			case -1:
 			{
-				sendMsg(key, "Invalid command sent.\n");
+				sendMsg(key, "Invalid command sent.\r\n");
 				break;
 			}
 		}
@@ -90,8 +89,10 @@ void	registerNewClient(t_server *serv, int key, std::string input)
 	// When the Client has entered all necessary fields, registration is finished.
 	if (CheckForMissingAuthElements(serv, key) == 0)
 	{
-		serv->clientMap.find(key)->second.SetRegistered(true);
-		sendMsg(key, "You have registered successfully.\n");
+		Client	&client = serv->clientMap[key];
+		client.SetRegistered(true);
+		std::string msg = ":ircserv 001 " + client.getNickname() + " :You have registered successfully\r\n";
+		sendMsg(key, msg.c_str());
 	}
 	return ;
 }

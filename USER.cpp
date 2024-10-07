@@ -19,15 +19,15 @@ bool	isUsernameTaken(t_server *serv, std::string name)
 const char	*isUsernameValid(t_server *serv, std::string name)
 {
 	if (name.length() > 10 || name.length() == 0)
-		return ("Error: Username should be 1-10 characters long.\n");
+		return ("Error: Username should be 1-10 characters long.\r\n");
 
 	for (int i = 0; name[i]; i++)
 	{
 		if (isalnum(name[i]) == false && isInCharSet(name[i], "-./:_") == false)
-			return ("Error: Special characters in Username are limited to : -./:_\n");
+			return ("Error: Special characters in Username are limited to : -./:_\r\n");
 	}
 	if (isUsernameTaken(serv, name) == true)
-		return ("Error: Username is already taken.");
+		return ("Error: Username is already taken.\r\n");
 
 	return (""); 
 }
@@ -41,13 +41,13 @@ void	USER(t_server *serv, int key, std::string arg)
 	// Checks if client already has a username
 	if (serv->clientMap.find(key)->second.getUsername().length() > 0)
 	{
-		sendMsg(key, "Once set, Username cannot be changed.\n");
+		sendMsg(key, "Once set, Username cannot be changed.\r\n");
 	}
 	else if (strlen(isUsernameValid(serv, arg)) == 0)
 	{
 		// If no format error is found, set the client's Username to it's new value.
 		serv->clientMap.find(key)->second.setUsername(arg);
-		msg = "Username set to: " + arg + "\n";
+		msg = "Username set to: " + arg + "\r\n";
 		sendMsg(key, msg.c_str());
 	}
 	else

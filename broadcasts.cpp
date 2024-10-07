@@ -55,6 +55,10 @@ void	broadcastToChannel(t_server *serv, std::string channelName, int senderFd, s
 		if (*it != senderFd)
 			sendMsg(*it, fullmsg.c_str());
 	}
+
+	// If the message starts by "8ball", the 8ball bot is called.
+	if (msg.substr(0, 5) == "8ball" && contains(msg, '?'))
+		ask8ball(serv, channelName);
 	return ;
 }
 

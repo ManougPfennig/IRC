@@ -38,7 +38,7 @@ void	JOIN(t_server *serv, int clientFd, std::string channelName, std::string pas
 		}
 
 		// Creating a new channel
-		serv->channelMap.insert(std::make_pair(channelName, Channel()));
+		serv->channelMap.insert(std::make_pair(channelName, Channel(channelName)));
 		std::cout << channelName << " channel created." << std::endl;
 
 		// If specified, set the given password
@@ -55,6 +55,10 @@ void	JOIN(t_server *serv, int clientFd, std::string channelName, std::string pas
 
 	// Getting a reference to the specified channel
 	Channel	&channel = serv->channelMap[channelName];
+
+	// Checking if the client is already in said channel
+	if (channel.isClientInChannel(clientFd))
+		return ;
 
 	// If the channel is password protected and the password is incorrect, decline the join request
 	if (!channel.getPassword().empty() && channel.getPassword() != password) {

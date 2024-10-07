@@ -19,18 +19,18 @@ bool	isNicknameTaken(t_server *serv, std::string name)
 const char *isNicknameValid(t_server *serv, std::string name)
 {
 	if (name.length() > 9 || name.length() == 0)
-		return ("Error: Nickname should be 1-9 characters long.\n");
+		return ("Error: Nickname should be 1-9 characters long.");
 	else if (isdigit(name[0]) == true)
-		return ("Error: Nickname should not start by a digit.\n");
+		return ("Error: Nickname should not start by a digit.");
 
 	for (int i = 0; name[i]; i++)
 	{
 		if (isalnum(name[i]) == false && isInCharSet(name[i], "[]\\^{}_-") == false)
-			return ("Error: Special characters in Nickname are limited to : []\\^{}_-\n");
+			return ("Error: Special characters in Nickname are limited to : []\\^{}_-");
 	}
 
 	if (isNicknameTaken(serv, name) == true)
-		return ("Error: Nickname is already taken.\n");
+		return ("Error: Nickname is already taken.");
 	return (""); 
 }
 
@@ -42,12 +42,12 @@ void	NICK(t_server *serv, int key, std::string arg)
 	if (strlen(isNicknameValid(serv, arg)) == 0)
 	{
 		serv->clientMap.find(key)->second.setNickname(arg);
-		msg = "Nickname set to: " + arg + "\n";
+		msg = "Nickname set to: " + arg + "\r\n";
 		sendMsg(key, msg.c_str());
 	}
 	else // Otherwise, send an appropriate error message to the client.
 	{
-		msg = isNicknameValid(serv, arg);
+		msg = ":ircserv 433 * " + arg + " :" + isNicknameValid(serv, arg) + "\r\n";
 		sendMsg(key, msg.c_str());
 	}
 	return ;
