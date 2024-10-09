@@ -47,7 +47,7 @@ void	serverLoop( t_server *serv )
 				std::cout << "New connexion...\n";
 
 				// Sending authentification message to client
-				sendMsg(serv->new_client, "Start registration using command 'PASS <password>' :\n");
+				sendMsg(serv->new_client, "Start registration using command 'PASS <password>' :\r\n");
 			}
 			catch (const std::exception& e)
 			{
